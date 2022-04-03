@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Box , TableContainer, Table, TableRow, TableCell, TableBody, Typography, Button, useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
@@ -8,6 +7,12 @@ import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+
+//Api
+import { getDaysInCurrentWeek, getDaysInNextWeek, getDaysInPreviousWeek } from '../../api/APIMobileCalendar';
+
+//Constants
+import { DAYS } from '../../constants/CalendarConstants';
 
 const calendarTable = {
     width: '100%',
@@ -58,7 +63,6 @@ const MobileCalendar = () => {
     const theme = useTheme();
     const matches = useMediaQuery(theme.breakpoints.down('sm'));
 
-    const days = ['Pon','Uto','Sri','Čet','Pet','Sub','Ned'];
     const [today, setToday] = useState(0);
     const [startOfWeek, setStartOfWeek] = useState('');
     const [endOfWeek, setEndOfWeek] = useState('');
@@ -67,54 +71,41 @@ const MobileCalendar = () => {
     const [currentYear, setCurrentYear] = useState(0);
 
     const handleNext = async () => {
-        try {
-            const week = await axios.post("http://localhost:5000/api/calendar/getDaysInNextWeek", {currentYear: currentYear, daysInCurrentWeek: daysInCurrentWeekDefault})
-            
+        getDaysInNextWeek(currentYear, daysInCurrentWeekDefault).then((week) => {
             setDaysInCurrentWeekDefault(week.data.nextWeek);
             setDaysInCurrentWeek(week.data.daysInCurrentWeek);
             setCurrentYear(week.data.currentYear);
             setToday(week.data.today);
             setStartOfWeek(week.data.startOfWeek);
             setEndOfWeek(week.data.endOfWeek);
-        } catch (error) {
-            console.log(error);
-        }
+        });
     }
 
     const handlePrevious = async () => {
-        try {
-            const week = await axios.post("http://localhost:5000/api/calendar/getDaysInPreviousWeek", {currentYear: currentYear, daysInCurrentWeek: daysInCurrentWeekDefault})
-            
+        getDaysInPreviousWeek(currentYear, daysInCurrentWeekDefault).then((week) => {
             setDaysInCurrentWeekDefault(week.data.nextWeek);
             setDaysInCurrentWeek(week.data.daysInCurrentWeek);
             setCurrentYear(week.data.currentYear);
             setToday(week.data.today);
             setStartOfWeek(week.data.startOfWeek);
             setEndOfWeek(week.data.endOfWeek);
-        } catch (error) {
-            console.log(error);
-        }
+        });
     }
 
     useEffect(() => {    
         let isSubscribed = true;
-        const calendar = async () => {
-            try {
-                const calendar = await axios.get("http://localhost:5000/api/calendar/getDaysInCurrentWeek");
-                if(isSubscribed) {
-                    setToday(calendar.data.currentDay);
-                    setStartOfWeek(calendar.data.startOfWeek);
-                    setEndOfWeek(calendar.data.endOfWeek);
-                    setDaysInCurrentWeek(calendar.data.daysInCurrentWeek);
-                    setDaysInCurrentWeekDefault(calendar.data.daysInCurrentWeekDefault);
-                    setCurrentYear(calendar.data.currentYear);
-                }
-            } catch (error) {
-                console.log(error);
-            }   
-        }
-        
-        calendar();
+
+        getDaysInCurrentWeek().then((calendar) => {
+            if(isSubscribed) {
+                setToday(calendar.data.currentDay);
+                setStartOfWeek(calendar.data.startOfWeek);
+                setEndOfWeek(calendar.data.endOfWeek);
+                setDaysInCurrentWeek(calendar.data.daysInCurrentWeek);
+                setDaysInCurrentWeekDefault(calendar.data.daysInCurrentWeekDefault);
+                setCurrentYear(calendar.data.currentYear);
+            }
+        });
+
         return () => isSubscribed = false;
     }, []);
 
@@ -147,7 +138,7 @@ const MobileCalendar = () => {
                 <Table sx={calendarTable}>
                     <TableBody>
                         {
-                            days.map((day,index) => {
+                            DAYS.map((day,index) => {
                                 return (
                                     <TableRow key={index}>
                                         <TableCell key={index} sx={calendarTableCellDays}>{day}</TableCell>

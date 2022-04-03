@@ -1,14 +1,18 @@
-import axios from 'axios';
 import { useState,  useContext } from 'react';
-import AuthContext from '../context/AuthContext';
 import { Link } from 'react-router-dom';
 import { Button , Container , TextField , Box , Alert , Stack , Snackbar} from '@mui/material';
+
+//Context
+import AuthContext from '../context/AuthContext';
 
 //Icons
 import LoginIcon from '@mui/icons-material/Login';
 
 //Components
 import ForgotPasswordModal from '../components/ForgotPasswordModal';
+
+//Api
+import { getLogIn } from '../api/APIAuthentication';
 
 const boxForm = {
     position: 'absolute',
@@ -54,19 +58,18 @@ const Login = (props) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        try {
-            const response = await axios.post("http://localhost:5000/api/auth/login", { email: email, password: password })
-            await getLoggedIn();
-            await getAuthorization();
+
+        getLogIn(email, password).then((response) => {
+            getLoggedIn();
+            getAuthorization();
+
             if(!response.data.validation) {
                 setMessage(response.data.message);
                 setValidation(response.data.validation);
                 setSuccess(undefined);
                 setOpenAlert(true);
             }
-        } catch (error) {
-            console.log(error);
-        }
+        });
     };
 
     const handleCloseAlert = (event, reason) => {

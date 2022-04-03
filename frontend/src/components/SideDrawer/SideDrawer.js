@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import { Box, CssBaseline, useMediaQuery } from '@mui/material';
-import axios from 'axios';
 
 //Components
 import SideDrawerScreen from './SideDrawerScreen';
 import SideDrawerMobile from './SideDrawerMobile';
+
+//Api
+import { getYourProfileData } from '../../api/APIUsers';
 
 const SideDrawer = (props) => {
     const theme = useTheme();
@@ -16,19 +18,11 @@ const SideDrawer = (props) => {
     useEffect(() => {
         let isSubscribed = true;
 
-        const getUserName = async () => {
-            try {
-                const response = await axios.get('http://localhost:5000/api/users/yourProfile');
-                
-                if(isSubscribed) 
-                    setName(response.data.user.firstName + " " + response.data.user.lastName);
-                    
-            } catch (error) {
-                console.log(error);
-            }
-        };
+        getYourProfileData().then((response) => {
+            if(isSubscribed) 
+                setName(response.data.user.firstName + " " + response.data.user.lastName);
+        });
 
-        getUserName();
         return () => isSubscribed = false;
     }, []);
 

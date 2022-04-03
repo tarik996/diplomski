@@ -1,10 +1,16 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Box , TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Typography, Button } from '@mui/material';
 
 //Icons
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+
+//Constants
+import { DAYS } from '../../constants/CalendarConstants';
+
+//Api
+import { getDaysInCurrentMonth, getNextMonth, getPreviousMonth } from '../../api/APIScreenCalendar';
+
 
 const calendarTable = {
     width: '100%',
@@ -65,68 +71,38 @@ const ScreenCalendar = () => {
     const [daysInMonth, setDaysInMonth] = useState([]);
 
     const handleNext = async () => {
-        try {
-            var nextMonth = month;
-            var nextYear = year;
-
-            if(month === 11) {
-                nextMonth = 0;
-                nextYear = nextYear + 1;
-            } else
-                nextMonth = nextMonth + 1;
-            
-            const calendar = await axios.post("http://localhost:5000/api/calendar/getNextMonth", {month: nextMonth, year: nextYear});
+        getNextMonth(month, year).then((calendar) => {
             setToday(calendar.data.today);
             setMonth(calendar.data.month);
             setMonthName(calendar.data.nextMonthName);
             setYear(calendar.data.year);
             setDaysInMonth(calendar.data.daysInNextMonth);
-        } catch (error) {
-            console.log(error);
-        }
+        });
     }
 
     const handlePrevious = async () => {
-        try {
-            var previousMonth = month;
-            var previousYear = year;
-
-            if(month === 0) {
-                previousMonth = 11;
-                previousYear = previousYear - 1;
-            } else
-                previousMonth = previousMonth - 1;
-            
-            const calendar = await axios.post("http://localhost:5000/api/calendar/getPreviousMonth", {month: previousMonth, year: previousYear});
+        getPreviousMonth(month, year).then((calendar) => {
             setToday(calendar.data.today);
             setMonth(calendar.data.month);
             setMonthName(calendar.data.previousMonthName);
             setYear(calendar.data.year);
             setDaysInMonth(calendar.data.daysInPreviousMonth);
-        } catch (error) {
-            console.log(error);
-        }
+        });
     }
 
     useEffect(() => {
         let isSubscribed = true;
         
-        const calendar = async () => {
-            try {
-                const calendar = await axios.get("http://localhost:5000/api/calendar/getDaysInCurrentMonth");
-                if(isSubscribed) {
-                    setToday(calendar.data.currentDay);
-                    setMonth(calendar.data.month);
-                    setMonthName(calendar.data.currentMonthName);
-                    setYear(calendar.data.currentYear);
-                    setDaysInMonth(calendar.data.daysInCurrentMonth);
-                }
-            } catch (error) {
-                console.log(error);
-            }   
-        }
-        
-        calendar();
+        getDaysInCurrentMonth().then((calendar) => {
+            if(isSubscribed) {
+                setToday(calendar.data.currentDay);
+                setMonth(calendar.data.month);
+                setMonthName(calendar.data.currentMonthName);
+                setYear(calendar.data.currentYear);
+                setDaysInMonth(calendar.data.daysInCurrentMonth);
+            }
+        });
+
         return () => isSubscribed = false
     }, []);
 
@@ -147,13 +123,13 @@ const ScreenCalendar = () => {
                 <Table sx={calendarTable}>
                     <TableHead>
                         <TableRow>
-                            <TableCell sx={calendarTableHeadCell}>Pon</TableCell>
-                            <TableCell sx={calendarTableHeadCell}>Uto</TableCell>
-                            <TableCell sx={calendarTableHeadCell}>Sri</TableCell>
-                            <TableCell sx={calendarTableHeadCell}>Čet</TableCell>
-                            <TableCell sx={calendarTableHeadCell}>Pet</TableCell>
-                            <TableCell sx={calendarTableHeadCell}>Sub</TableCell>
-                            <TableCell sx={calendarTableHeadCell}>Ned</TableCell>
+                            {
+                                DAYS.map((day, index) => {
+                                    return (
+                                        <TableCell key={index} sx={calendarTableHeadCell}>{day}</TableCell>
+                                    )
+                                })
+                            }
                         </TableRow>
                     </TableHead>
                     <TableBody>

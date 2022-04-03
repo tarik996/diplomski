@@ -1,6 +1,8 @@
 import { useEffect, createContext, useCallback, useRef } from 'react';
 import useLocalStorage from '../hooks/UseLocalStorage';
-import axios from 'axios';
+
+//Api
+import { getUserRole, isLoggedIn } from '../api/APIAuthentication';
 
 const AuthContext = createContext();
 
@@ -11,21 +13,15 @@ function AuthContextProvider(props) {
     const [authorization, setAuthorization] = useLocalStorage(props.authKey2);
 
     const getLoggedIn = useCallback ( async () => {
-        try {
-            const loggedInRes = await axios.get("http://localhost:5000/api/auth/loggedIn");
+        isLoggedIn().then((loggedInRes) => {
             setLoggedIn(loggedInRes.data); 
-        } catch (error) {
-            console.log(error);
-        }
+        });
     }, [setLoggedIn]);
 
     const getAuthorization = useCallback ( async () => {
-        try {
-            const response = await axios.get("http://localhost:5000/api/auth/roleAuthorization");
+        getUserRole().then((response) => {
             setAuthorization(response.data);
-        } catch (error) {
-            console.log(error);
-        }
+        });
     }, [setAuthorization]);
 
     useEffect(() => {

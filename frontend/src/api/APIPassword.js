@@ -16,4 +16,12 @@ const changePassword = async (password) => {
     }
 }
 
-export { resetPassword, changePassword };
+const forgotPassword = async (email) => {
+    try {
+        return await axios.put("http://localhost:5000/api/password/forgotpassword", { email: email });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export { resetPassword, changePassword, forgotPassword };

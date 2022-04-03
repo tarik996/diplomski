@@ -160,12 +160,12 @@ const ViewProfile = () => {
                         </Button>
                     </Link>
                     <Link to={`/createEmployeeStatus/${params.userId}`} style={{ textDecoration: 'none' }}>
-                        <Button variant="contained" color="warning" sx={{
+                        <Button variant="contained" color="success" sx={{
                             ...(matches && ({ width: '100%', marginTop: 1 })),
                             ...(!matches && ({ width: '49%' }))
                         }}
                         >
-                            Promjeni
+                            Dodaj
                         </Button>
                     </Link>
                 </Box>

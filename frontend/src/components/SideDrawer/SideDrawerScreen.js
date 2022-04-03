@@ -8,7 +8,7 @@ import { blue } from '@mui/material/colors';
 import GroupIcon from '@mui/icons-material/Group';
 
 //Constants
-import { ROLES } from '../../constants/Authorization';
+import { ROLES } from '../../constants/AuthorizationConstants';
 
 //Context
 import AuthContext from '../../context/AuthContext';

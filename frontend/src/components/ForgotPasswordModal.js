@@ -1,6 +1,8 @@
 import { useState } from 'react';
-import axios from 'axios';
 import { Dialog , DialogTitle , DialogContent , DialogContentText , DialogActions , Button , TextField} from '@mui/material';
+
+//Api
+import { forgotPassword } from '../api/APIPassword';
 
 const ForgotPasswordModal = (props) => {
 
@@ -8,13 +10,11 @@ const ForgotPasswordModal = (props) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        try {
-            const response = await axios.put("http://localhost:5000/api/password/forgotpassword", { email: email });
+
+        forgotPassword(email).then((response) => {
             props.resetPassword(response.data);
             props.handleCloseModal();
-        } catch (error) {
-            console.log(error);
-        }
+        });
     };
 
     const handleClose = () => {

@@ -1,5 +1,4 @@
 import { useState , useRef , useEffect, useContext } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { AppBar, Box, Toolbar, IconButton, MenuList, MenuItem, ClickAwayListener, Popper, Grow, Paper} from '@mui/material';
@@ -12,6 +11,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import LogoutIcon from '@mui/icons-material/Logout';
+
+//Api
+import { getLogOut } from '../api/APIAuthentication';
 
 const StyledBox = styled(Box, { shouldForwardProp: (prop) => prop !== 'open' })(({theme, open}) => ({
     [theme.breakpoints.down('md')]: {
@@ -32,14 +34,12 @@ const Navbar = (props) => {
 
     const logOut = async (event) => {
         event.preventDefault();
-        try {
-            const response = await axios.delete("http://localhost:5000/api/auth/logout");
-            await getLoggedIn();
-            await getAuthorization();
+
+        getLogOut().then((response) => {
+            getLoggedIn();
+            getAuthorization();
             props.callBack(response.data.message, response.data.isLogOut);
-        } catch (error) {
-            console.log(error);
-        }
+        });
     }
 
     const handleToggle = () => {

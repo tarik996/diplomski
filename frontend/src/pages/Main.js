@@ -28,16 +28,13 @@ import EditUserForm from '../components/User/EditUserForm';
 //Status
 import EmployeeStatusForm from '../components/EmployeeStatus/EmployeeStatusForm';
 
-
 //Context
 import AuthContext from '../context/AuthContext';
 
 //Route access
 import { PrivateRoute , PublicRoute, AdminRoute } from '../helpers/AccessRoute';
 
-
-
-function Router() {
+const Router = () => {
     const theme = useTheme();
     const matches = useMediaQuery(theme.breakpoints.down('md'));
     

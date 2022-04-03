@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
 
 //Constants
-import { ROLES } from '../constants/Authorization';
+import { ROLES } from '../constants/AuthorizationConstants';
 
 //Context
 import AuthContext from '../context/AuthContext';
