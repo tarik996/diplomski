@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, Stack } from '@mui/material';
 
 //Api
-import { changePassword } from '../../api/APIPassword';
+import { changePassword } from '../../../api/APIPassword';
 
 const ChangePasswordModal = (props) => {
     const [oldPassword, setOldPassword] = useState("");

@@ -4,7 +4,7 @@ import { Avatar, Box, Button, Card, CardActions, CardContent, CardHeader, Divide
 import { blue } from '@mui/material/colors';
 
 //Component
-import ChangePasswordModal from './ChangePasswordModal';
+import ChangePasswordModal from './Modals/ChangePasswordModal';
 
 //Api
 import { getYourProfileData } from '../../api/APIUsers';

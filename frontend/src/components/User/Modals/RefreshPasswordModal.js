@@ -1,7 +1,7 @@
 import { Dialog , DialogTitle , DialogContent , DialogContentText , DialogActions , Button } from '@mui/material';
 
 //Api
-import { resetPassword } from '../../api/APIPassword';
+import { resetPassword } from '../../../api/APIPassword';
 
 const RefreshPasswordModal = (props) => {
 

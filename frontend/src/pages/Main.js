@@ -27,6 +27,8 @@ import EditUserForm from '../components/User/EditUserForm';
 
 //Status
 import EmployeeStatusForm from '../components/EmployeeStatus/EmployeeStatusForm';
+import EmployeeStatusTable from '../components/EmployeeStatus/EmployeeStatusTable';
+import EditEmployeeStatus from '../components/EmployeeStatus/EditEmployeeStatus';
 
 //Context
 import AuthContext from '../context/AuthContext';
@@ -176,6 +178,34 @@ const Router = () => {
                                 ) : (
                                     <Screen open={open} >
                                         <EmployeeStatusForm page={'Dodaj status'} />
+                                    </Screen>
+                                )
+                            }
+                        </AdminRoute>
+                    } />
+                    <Route path="/employeeStatus/:userId" element={
+                        <AdminRoute>
+                            { matches ? (
+                                    <Mobile open={open} >
+                                        <EmployeeStatusTable page={'Statusi'} />
+                                    </Mobile>
+                                ) : (
+                                    <Screen open={open} >
+                                        <EmployeeStatusTable page={'Statusi'} />
+                                    </Screen>
+                                )
+                            }
+                        </AdminRoute>
+                    } />
+                    <Route path="/editEmployeeStatus/:statusId" element={
+                        <AdminRoute>
+                            { matches ? (
+                                    <Mobile open={open} >
+                                        <EditEmployeeStatus page={'Promjeni status'} />
+                                    </Mobile>
+                                ) : (
+                                    <Screen open={open} >
+                                        <EditEmployeeStatus page={'Promjeni status'} />
                                     </Screen>
                                 )
                             }

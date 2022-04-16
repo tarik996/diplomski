@@ -150,7 +150,7 @@ const ViewProfile = () => {
                     paddingTop: 3
                 }}
                 >
-                    <Link to={`/profile/`} style={{ textDecoration: 'none' }}>
+                    <Link to={`/employeeStatus/${params.userId}`} style={{ textDecoration: 'none' }}>
                         <Button variant="contained" sx={{
                             ...(matches && ({ width: '100%' })),
                             ...(!matches && ({ marginRight: 0.5, width: '49%' }))

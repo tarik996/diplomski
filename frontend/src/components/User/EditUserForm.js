@@ -8,7 +8,7 @@ import { getRoles } from '../../api/APIRoles';
 import { getUserData, changeUser } from '../../api/APIUsers';
 
 //Components
-import RefreshPasswordModal from './RefreshPasswordModal';
+import RefreshPasswordModal from './Modals/RefreshPasswordModal';
 
 const EditUserForm = () => {
     const theme = useTheme();
@@ -87,6 +87,7 @@ const EditUserForm = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        
         changeUser(user, params).then((response) => {
             if(response.data.message !== '')
                 setOpenAlert(true);
