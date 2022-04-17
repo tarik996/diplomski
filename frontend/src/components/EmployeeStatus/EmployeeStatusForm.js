@@ -87,7 +87,7 @@ const EmployeeStatusForm = () => {
             />
             <Box sx={{marginTop: 1}}>
                 <Button onClick={handleSubmit} type="submit" color="primary"  variant="contained" fullWidth>
-                    Promjeni
+                    Dodaj
                 </Button>
             </Box>
             <Stack sx={{ width: '100%' }} spacing={2}>

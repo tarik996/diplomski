@@ -26,7 +26,7 @@ const createEmployeeStatus = async (params, employeeStatus) => {
 
 const editEmployeeStatus = async (params, employeeStatus) => {
     try {
-        return await axios.put(`http://localhost:5000/api/employeeStatus/updateEmployeeStatus${params.statusId}`, employeeStatus);
+        return await axios.put(`http://localhost:5000/api/employeeStatus/updateEmployeeStatus/${params.statusId}`, employeeStatus);
     } catch (error) {
         console.log(error);
     }
