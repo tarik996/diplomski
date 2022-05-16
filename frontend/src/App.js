@@ -11,7 +11,7 @@ axios.defaults.withCredentials = true;
 
 function App() {
   return (
-    <AuthContextProvider authKey1={'iaAuth1'} authKey2={'isAuth2'}>
+    <AuthContextProvider authKey1={'iaAuth1'} authKey2={'isAuth2'} isCheckIn={'isCheckIn'}>
       <Main />
     </AuthContextProvider>
   );

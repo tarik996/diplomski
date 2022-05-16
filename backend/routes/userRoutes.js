@@ -122,9 +122,6 @@ router.post('/create', verifyAccessToken, adminRoleAuth, async (req, res) => {
     const createUserRoleID = await Role.findOne({roleName: req.body.role});
 
     try { 
-        //Pronalazank svih korisnika da bi nasli broj elemenate
-        const allUsers = await User.find();
-
         //Kreiranje i hesiranje lozinke 
         const password = generatePassword();
         const salt = await bcrypt.genSalt(10);
@@ -132,7 +129,6 @@ router.post('/create', verifyAccessToken, adminRoleAuth, async (req, res) => {
 
         //Kreiranje korisnika
         const user = new User({
-            id: allUsers.length + 1,
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             address: req.body.address,
@@ -142,6 +138,8 @@ router.post('/create', verifyAccessToken, adminRoleAuth, async (req, res) => {
             position: req.body.position,
             personalDeductions: req.body.personalDeductions,
             hourlyWage: req.body.hourlyWage,
+            workingHourFrom: "08:00",
+            workingHourTo: "16:00",
             vacation: req.body.vacation,
             roleId: createUserRoleID,
         });
@@ -169,7 +167,7 @@ router.get('/getAllUsers', verifyAccessToken, adminRoleAuth, async (req, res) =>
             name = (allUsers[i].firstName + " " + allUsers[i].lastName).toString();
             usersNames.push({
                 _id: allUsers[i]._id, 
-                index: allUsers[i].id, 
+                index: i + 1, 
                 userName: name, 
                 jmbg: allUsers[i].jmbg, 
                 address: allUsers[i].address,
@@ -232,6 +230,91 @@ router.get('/yourProfile', verifyAccessToken, async (req, res) => {
         
         return res.json({user: response});
     } catch (error) {   
+        res.send(error);
+    }
+});
+
+//Radno vrijeme uposlenika
+
+//Vraća radno vrijeme za svakog korisnika
+router.get('/getAllUsersWorkingHours', verifyAccessToken, adminRoleAuth, async (req, res) => {
+    try {
+        const allUsers = await User.find();
+        const tableHeaders = [['Id', 'Ime i prezime', 'Radno vrijeme od', 'Radvno vrijeme do']];
+        const userJSON = ['index', 'userName', 'workingHourFrom', 'workingHourTo'];
+
+        var name = "";
+        var usersNames = [];
+
+        for(var i = 0; i < allUsers.length; i++) {
+            name = (allUsers[i].firstName + " " + allUsers[i].lastName).toString();
+            usersNames.push({
+                _id: allUsers[i]._id, 
+                index: i + 1, 
+                userName: name, 
+                workingHourFrom: allUsers[i].workingHourFrom,
+                workingHourTo: allUsers[i].workingHourTo
+            });
+        }
+
+        return res.json({usersNames: usersNames, tableHeaders: tableHeaders, userJSON: userJSON});
+    } catch (error) {
+        res.send(error)
+    }
+});
+
+
+//Promjena radnog vremena za korisnike
+router.put('/editUserWorkingHours', verifyAccessToken, adminRoleAuth, async (req, res) => {
+    //Validacija podataka
+    const workingHourFrom = (req.body.workingHourFrom).split(":");
+    const workingHourTo = (req.body.workingHourTo).split(":");
+    const regex = /^([0,1][0-9]|2[0-3]):[0,3][0]$/;
+
+    if(!(req.body.workingHourFrom).match(regex)) {
+        if(!(req.body.workingHourTo).match(regex))
+            return res.json({messageFrom: 'Radno vrijeme od neispravno!', isEditFrom: true, messageTo: 'Radno vrijeme do neispravno!', isEditTo: true});
+        
+        return res.json({messageFrom: 'Radno vrijeme od neispravno', isEditFrom: true, messageTo: 'Minuti mogu biti samo na pola sata, tipa 08:30 ili 09:00', isEditTo: false});
+    } 
+
+    if(!(req.body.workingHourTo).match(regex))
+        return res.json({messageFrom: 'Minuti mogu biti samo na pola sata, tipa 08:30 ili 09:00', isEditFrom: false, messageTo: 'Radno vrijeme do neispravno!', isEditTo: true});
+       
+    
+    if(parseInt(workingHourFrom[0]) >= parseInt(workingHourTo[0])) 
+        return res.json({messageFrom: 'Radno vrijeme od ne može biti veće ili jednako od radnog vremena do!', isEditFrom: true, messageTo: 'Minuti mogu biti samo na pola sata, tipa 08:30 ili 09:00', isEditTo: false});
+
+    try {
+        const update = { 
+            workingHourFrom: req.body.workingHourFrom, 
+            workingHourTo: req.body.workingHourTo
+        }
+
+        await User.findOneAndUpdate({_id: req.body._id}, update, { new: true });
+
+        return res.json({message: 'Radno vrijeme je uspješno promjenjeno', isEdit: true});
+    } catch (error) {
+        res.send(error);
+    }
+});
+
+//Vraća radno vrijeme za jednog korisnika
+router.get('/yourWorkingHours', verifyAccessToken, async (req, res) => {
+    try {
+        const user = await User.findById({ _id: req.user._id }, { id: 0, password: 0, __v: 0 });
+
+        const response = {
+            _id: user._id,
+            firstName: user.firstName, 
+            lastName: user.lastName, 
+            workingHourFrom: user.workingHourFrom,
+            workingHourTo: user.workingHourTo,
+            position: user.position
+        };
+        
+        return res.json({user: response});
+    } catch (error) {
         res.send(error);
     }
 });

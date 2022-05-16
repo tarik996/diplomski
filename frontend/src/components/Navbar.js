@@ -1,7 +1,7 @@
 import { useState , useRef , useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
-import { AppBar, Box, Toolbar, IconButton, MenuList, MenuItem, ClickAwayListener, Popper, Grow, Paper} from '@mui/material';
+import { AppBar, Box, Toolbar, IconButton, MenuList, MenuItem, ClickAwayListener, Popper, Grow, Paper, Chip } from '@mui/material';
 
 //Context
 import AuthContext from '../context/AuthContext';
@@ -28,7 +28,7 @@ const StyledBox = styled(Box, { shouldForwardProp: (prop) => prop !== 'open' })(
 const Navbar = (props) => {
     const anchorRef = useRef(null);
 
-    const { getLoggedIn, getAuthorization } = useContext(AuthContext);
+    const { getLoggedIn, getAuthorization, flagCheckIn } = useContext(AuthContext);
 
     const [open, setOpen] = useState(false);
 
@@ -113,6 +113,9 @@ const Navbar = (props) => {
                     <IconButton size="large" color="inherit" sx={{ ml: 0,  ...(!props.open && {marginLeft: 1})}} onClick={props.toggleSideDrawer}>
                         <MenuIcon />
                     </IconButton>
+                    { !flagCheckIn && (
+                        <Chip color="warning" label="Izvršite prijavu za današnji dan!"/>
+                    )}
                     <Box sx={{ flexGrow: 1 }} />
                     <Box sx={{ display: { xs: 'none', md: 'flex' }}}>
                         <Link to="/yourProfile" style={{textDecoration: 'none', width: '100%', color: 'white'}} >

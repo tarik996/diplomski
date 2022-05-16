@@ -57,11 +57,11 @@ router.post('/login', async (req, res) => {
     
     const lastStatus = employeeStatus.pop();
     //Provjerava da li je status različit od "Ne radi", ako jeste dozvoliti ulazak na aplikaciju, ako nije onemogućiti
-    if(lastStatus.status === EMPLOYEESTATUS.status2 && new Date(new Date(lastStatus.dateStatusChange).setUTCHours(0,0,0,0)) <= new Date()) 
+    if(lastStatus.status === EMPLOYEESTATUS.status2 && new Date(new Date(lastStatus.dateStatusChange).setUTCHours(0,0,0,0)) <= new Date(new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60 * 1000).setUTCHours(0,0,0,0))) 
         return res.json({ message: 'Više niste zaposlenik firme!', validation: false });
         
     //Provjerava da li je radni odnos stupio na snagu, ako jeste omogućiti ulazak na stranicu
-    if(lastStatus.status === EMPLOYEESTATUS.status1 && new Date(new Date(lastStatus.dateStatusChange).setUTCHours(0,0,0,0)) > new Date(new Date().setUTCHours(0,0,0,0))) 
+    if(lastStatus.status === EMPLOYEESTATUS.status1 && new Date(new Date(lastStatus.dateStatusChange).setUTCHours(0,0,0,0)) > new Date(new Date(new Date().getTime() - new Date().getTimezoneOffset() * 60 * 1000).setUTCHours(0,0,0,0))) 
         return res.json({ message: 'Radni odnos još nije stupio na snagu!', validation: false });
     
     //Kreiranje i dodjela tokena

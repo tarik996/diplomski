@@ -51,8 +51,15 @@ router.get('/getDaysInCurrentWeek', async (req, res) => {
     var daysInCurrentWeek = calendarFunction.currentWeekValue(daysInCurrentMonth, currentDate)[1];
     var startOfWeek = calendarFunction.currentWeekValue(daysInCurrentMonth, currentDate)[2];
     var endOfWeek = calendarFunction.currentWeekValue(daysInCurrentMonth, currentDate)[3];
-    
-    return res.json({currentDay: currentDay, startOfWeek: startOfWeek, endOfWeek: endOfWeek, daysInCurrentWeek: daysInCurrentWeek, daysInCurrentWeekDefault: daysInCurrentWeekDefault ,currentYear: currentYear})
+    var getStartOfWeekMonth = parseInt(startOfWeek.split('/')[1]);
+    var getEndOfWeekMonth = parseInt(endOfWeek.split('/')[1]);
+
+    var bool = false;
+
+    if(getStartOfWeekMonth === (new Date()).getMonth() + 1 || getEndOfWeekMonth === (new Date()).getMonth() + 1)
+        bool = true;
+
+    return res.json({currentDay: currentDay, startOfWeek: startOfWeek, endOfWeek: endOfWeek, daysInCurrentWeek: daysInCurrentWeek, daysInCurrentWeekDefault: daysInCurrentWeekDefault ,currentYear: currentYear, sameMonth: bool})
 });
 
 router.post('/getDaysInNextWeek', async (req, res) => {
@@ -85,8 +92,19 @@ router.post('/getDaysInNextWeek', async (req, res) => {
     var startOfWeek = calendarFunction.weekValue(nextWeek)[1];
     var endOfWeek = calendarFunction.weekValue(nextWeek)[2];
     var daysInCurrentWeek = calendarFunction.weekValue(nextWeek)[3];
+    var getStartOfWeekMonth = parseInt(startOfWeek.split('/')[1]);
+    var getEndOfWeekMonth = parseInt(endOfWeek.split('/')[1]);
 
-    return res.json({nextWeek: nextWeek, daysInCurrentWeek: daysInCurrentWeek, currentYear: currentYear, today: today, startOfWeek: startOfWeek, endOfWeek: endOfWeek});
+    var bool = false;
+
+    if(getStartOfWeekMonth === (new Date()).getMonth() + 1 || getEndOfWeekMonth === (new Date()).getMonth() + 1 ) {
+        today = new Date().getDate();
+        bool = true;
+    }
+    if((getStartOfWeekMonth === (new Date()).getMonth() || getEndOfWeekMonth === (new Date()).getMonth()) && (new Date()).getDate() <= 8) 
+        bool = true;
+    
+    return res.json({nextWeek: nextWeek, daysInCurrentWeek: daysInCurrentWeek, currentYear: currentYear, today: today, startOfWeek: startOfWeek, endOfWeek: endOfWeek, sameMonth: bool});
 });
 
 router.post('/getDaysInPreviousWeek', async (req, res) => {
@@ -119,8 +137,19 @@ router.post('/getDaysInPreviousWeek', async (req, res) => {
     var startOfWeek = calendarFunction.weekValue(nextWeek)[1];
     var endOfWeek = calendarFunction.weekValue(nextWeek)[2];
     var daysInCurrentWeek = calendarFunction.weekValue(nextWeek)[3];
+    var getStartOfWeekMonth = parseInt(startOfWeek.split('/')[1]);
+    var getEndOfWeekMonth = parseInt(endOfWeek.split('/')[1]);
 
-    return res.json({nextWeek: nextWeek, daysInCurrentWeek: daysInCurrentWeek, currentYear: currentYear, today: today, startOfWeek: startOfWeek, endOfWeek: endOfWeek});
+    var bool = false;
+
+    if(getStartOfWeekMonth === (new Date()).getMonth() + 1 || getEndOfWeekMonth === (new Date()).getMonth() + 1 ) {
+        today = new Date().getDate();
+        bool = true;
+    }
+    if((getStartOfWeekMonth === (new Date()).getMonth() || getEndOfWeekMonth === (new Date()).getMonth()) && (new Date()).getDate() <= 8) 
+        bool = true;
+
+    return res.json({nextWeek: nextWeek, daysInCurrentWeek: daysInCurrentWeek, currentYear: currentYear, today: today, startOfWeek: startOfWeek, endOfWeek: endOfWeek, sameMonth: bool});
 });
 
 module.exports = router;

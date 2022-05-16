@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { useMediaQuery } from '@mui/material';
+import { useMediaQuery, Box } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
 //Screens
@@ -15,8 +15,7 @@ import SideDrawer from '../components/SideDrawer/SideDrawer';
 import Navbar from '../components/Navbar';
 
 //Calendar
-import MobileCalendar from '../components/Calendar/MobileCalendar';
-import ScreenCalendar from '../components/Calendar/ScreenCalendar';
+import ScreenCalendar from '../components/Calendar/Calendar';
 
 //User
 import ViewYourProfile from '../components/User/ViewYourProfile';
@@ -24,6 +23,12 @@ import UsersTable from '../components/User/UsersTable';
 import CreateUserForm from '../components/User/CreateUserForm';
 import ViewProfile from '../components/User/ViewProfile';
 import EditUserForm from '../components/User/EditUserForm';
+
+//EmployeesWorkingHours
+import UsersWorkingHoursTable from '../components/UsersWorkingHours/UsersWorkingHoursTable';
+
+//UserCheckIn
+import UserCheckInForm from '../components/UserCkeckIn/UserCheckInForm';
 
 //Status
 import EmployeeStatusForm from '../components/EmployeeStatus/EmployeeStatusForm';
@@ -43,7 +48,7 @@ const Router = () => {
     const [message, setMessage] = useState("");
     const [isLogOut, setIsLogOut] = useState(false);
 
-    const { loggedIn } = useContext(AuthContext);
+    const { loggedIn, getIsCheckIn, setFlagCheckIn } = useContext(AuthContext);
 
     const [open, setOpen] = useState(false);
 
@@ -63,21 +68,25 @@ const Router = () => {
 
     useEffect(() => {
         let isSubscribed = true;
+        if(loggedIn === true)
+            getIsCheckIn();
+        else 
+            setFlagCheckIn(false);
         if(isSubscribed) {
             if(!matches) setOpen(true);
             else setOpen(false);  
         }
         return () => isSubscribed = false;
-    }, [matches]);
+    }, [matches, getIsCheckIn, loggedIn, setFlagCheckIn]);
 
     return (
-        <div>
+        <Box>
             <BrowserRouter>
                 { loggedIn === true && (
-                    <div>
+                    <Box>
                         <SideDrawer open={open} setOpen={setOpen} />
                         <Navbar toggleSideDrawer={toggleSideDrawer} open={open} callBack={callBack}/>
-                    </div>
+                    </Box>
                 )}
                 <Routes>
                     <Route path="/" element={
@@ -89,7 +98,7 @@ const Router = () => {
                         <PrivateRoute>
                             { matches ? (
                                     <Mobile open={open} >
-                                        <MobileCalendar page={'Kalendar'} />
+                                        <ScreenCalendar page={'Kalendar'} />
                                     </Mobile>
                                 ) : (
                                     <Screen open={open} >
@@ -211,9 +220,37 @@ const Router = () => {
                             }
                         </AdminRoute>
                     } />
+                    <Route path="/employeesWorkingHours" element={
+                        <AdminRoute>
+                            { matches ? (
+                                    <Mobile open={open} >
+                                        <UsersWorkingHoursTable page={'Radno vrijeme'} />
+                                    </Mobile>
+                                ) : (
+                                    <Screen open={open} >
+                                        <UsersWorkingHoursTable page={'Radno vrijeme'} />
+                                    </Screen>
+                                )
+                            }
+                        </AdminRoute>
+                    } />
+                    <Route path="/dailyCheckIn" element={
+                        <PrivateRoute>
+                            { matches ? (
+                                    <Mobile open={open} >
+                                        <UserCheckInForm page={'Prijava'} />
+                                    </Mobile>
+                                ) : (
+                                    <Screen open={open} >
+                                        <UserCheckInForm page={'Prijava'} />
+                                    </Screen>
+                                )
+                            }
+                        </PrivateRoute>
+                    } />
                 </Routes>
             </BrowserRouter>
-        </div>
+        </Box>
     )
 }
 

@@ -2,7 +2,7 @@ const Joi = require('@hapi/joi');
 
 const employeeStatusValidation = (data) => { 
     const employeeStatusSchemaValidation = Joi.object({
-        status: Joi.string().required().valid('Radi', 'Ne radi', 'Plaćeno odsustvo', 'Neplaćeno odsustvo').messages({
+        status: Joi.string().required().valid('Radi', 'Ne radi').messages({
             "any.only": `"status" Ovaj status ne postoji`,
             "string.empty": `"status" Status je obavezan`,
             "any.required": `"status" Status je obavezan`

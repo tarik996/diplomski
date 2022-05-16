@@ -1,11 +1,6 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
-    id: {
-        type: Number,
-        required: true,
-        min: 1
-    },
     firstName: {
         type: String,
         required: true,
@@ -52,6 +47,15 @@ const userSchema = new mongoose.Schema({
         type: Number,
         required: true,
         min: 2.05
+    },
+    workingHourFrom: {
+        type: String,
+        required: false
+
+    },
+    workingHourTo: {
+        type: String,
+        required: false
     },
     roleId: {
         type: mongoose.Schema.Types.ObjectId,

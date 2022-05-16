@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Box, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel, TextareaAutosize, TextField, Typography, Button,
          Stack, Snackbar, Alert} from "@mui/material";
 import { MobileDatePicker, LocalizationProvider } from "@mui/lab";
-import DateAdapter from '@mui/lab/AdapterMoment'
+import DateAdapter from '@mui/lab/AdapterMoment';
 import moment from "moment";
 import "moment/locale/sr";
 
@@ -64,8 +64,6 @@ const EditEmployeeStatus = () => {
                 <RadioGroup row value={status} onChange={handleChange}> 
                     <FormControlLabel value="Radi" control={<Radio />} label="Radi" />
                     <FormControlLabel value="Ne radi" control={<Radio />} label="Ne radi" />
-                    <FormControlLabel value="Plaćeno odsustvo" control={<Radio />} label="Plaćeno odsustvo" />
-                    <FormControlLabel value="Neplaćeno odsustvo" control={<Radio />} label="Neplaćeno odsustvo" />
                 </RadioGroup>
             </FormControl>
             <LocalizationProvider dateAdapter={DateAdapter} locale={"sr"} >

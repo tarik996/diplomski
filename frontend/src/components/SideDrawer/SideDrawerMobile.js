@@ -6,6 +6,10 @@ import { blue } from '@mui/material/colors';
 
 //Icons
 import GroupIcon from '@mui/icons-material/Group';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import DoneIcon from '@mui/icons-material/Done';
+import WbSunnyIcon from '@mui/icons-material/WbSunny';
 
 //Constants
 import { ROLES } from '../../constants/AuthorizationConstants';
@@ -74,11 +78,87 @@ const SideDrawerMobile = (props) => {
                                     <ListItemText primary="Zaposlenici" />
                                 </ListItem >
                             </Link>
+                            <Link to="/employeesWorkingHours" style={{textDecoration: 'none', color:'black'}}>
+                                <ListItem button key="RadnoVrijeme">
+                                    <ListItemIcon sx={{paddingLeft: 1}}>
+                                        <AccessTimeIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Radno vrijeme" />
+                                </ListItem >
+                            </Link>
+                            <Link to="#" style={{textDecoration: 'none', color:'black'}}>
+                                <ListItem button key="PlateIzvjestaj">
+                                    <ListItemIcon sx={{paddingLeft: 1}}>
+                                        <PictureAsPdfIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Plate izvještaj" />
+                                </ListItem >
+                            </Link>
                         </List>
                         <Divider variant='middle'/>
                     </Box>
                 )}
-                <Divider />    
+                { ( authorization === ROLES.ACCOUNTANT ) && (
+                    <Box>
+                        <List> 
+                            { props.open && (
+                                <ListSubheader >
+                                    KNJIGOVOĐA OPCIJE
+                                </ListSubheader>
+                            )}
+                            <Link to="/allUsers" style={{textDecoration: 'none', color:'black'}}>
+                                <ListItem button key="Zaposlenici">
+                                    <ListItemIcon sx={{paddingLeft: 1}}>
+                                        <GroupIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Zaposlenici" />
+                                </ListItem >
+                            </Link>
+                            <Link to="#" style={{textDecoration: 'none', color:'black'}}>
+                                <ListItem button key="PlateIzvjestaj">
+                                    <ListItemIcon sx={{paddingLeft: 1}}>
+                                        <PictureAsPdfIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Plate izvještaj" />
+                                </ListItem >
+                            </Link>
+                        </List>
+                        <Divider variant='middle'/>
+                    </Box>
+                )}
+                <Box>
+                    <List> 
+                        { props.open && (
+                            <ListSubheader >
+                                ZAPOSLENIK OPCIJE
+                            </ListSubheader>
+                        )}
+                        <Link to="/dailyCheckIn" style={{textDecoration: 'none', color:'black'}}>
+                            <ListItem button key="Prijava">
+                                <ListItemIcon sx={{paddingLeft: 1}}>
+                                    <DoneIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Prijava" />
+                            </ListItem >
+                        </Link>
+                        <Link to="#" style={{textDecoration: 'none', color:'black'}}>
+                            <ListItem button key="Odmori">
+                                <ListItemIcon sx={{paddingLeft: 1}}>
+                                    <WbSunnyIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Odmori" />
+                            </ListItem >
+                        </Link>
+                        <Link to="#" style={{textDecoration: 'none', color:'black'}}>
+                            <ListItem button key="PlateIzvjestaj">
+                                <ListItemIcon sx={{paddingLeft: 1}}>
+                                    <PictureAsPdfIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Plate izvještaj" />
+                            </ListItem >
+                        </Link>
+                    </List>
+                </Box>  
             </Box>
         </Drawer>  
     );

@@ -8,7 +8,7 @@ const employeeStatusSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['Radi', 'Ne radi', 'Plaćeno odsustvo', 'Neplaćeno odsustvo'],
+        enum: ['Radi', 'Ne radi' ],
         required: true
     },
     description: {

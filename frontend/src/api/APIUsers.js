@@ -40,4 +40,30 @@ const changeUser = async (user, params) => {
     }
 }
 
-export { getAllUsers, createUser, getUserData, changeUser, getYourProfileData };
+//Radno vrijeme
+
+const getAllUsersWorkingHours = async () => {
+    try {
+        return await axios.get("http://localhost:5000/api/users/getAllUsersWorkingHours");
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const changeUserWorkingHours = async (workingHour) => {
+    try {
+        return await axios.put(`http://localhost:5000/api/users/editUserWorkingHours`, workingHour);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const getYourWorkingHours = async () => {
+    try {
+        return await axios.get('http://localhost:5000/api/users/yourWorkingHours');
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export { getAllUsers, createUser, getUserData, changeUser, getYourProfileData, getAllUsersWorkingHours, changeUserWorkingHours, getYourWorkingHours };

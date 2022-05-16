@@ -13,6 +13,7 @@ const calendarRoutes = require('./routes/calendarRoutes');
 const fontsRoutes = require('./routes/fontRoutes');
 const roleRoutes = require('./routes/roleRoutes');
 const employeeStatusRoutes = require('./routes/employeeStatusRoutes');
+const statusRecordRoutes = require('./routes/statusRecordRoutes');
 
 dotenv.config();
 
@@ -34,7 +35,8 @@ app.use('/api/password', resetPasswordRoutes);
 app.use('/api/calendar', calendarRoutes);
 app.use('/api/fonts', fontsRoutes);
 app.use('/api/roles', roleRoutes);
-app.use('/api/employeeStatus', employeeStatusRoutes)
+app.use('/api/employeeStatus', employeeStatusRoutes);
+app.use('/api/statusRecord', statusRecordRoutes);
 
 //Listening port
 app.listen(process.env.PORT, () => console.log(`Server is running on port ${process.env.PORT}`));

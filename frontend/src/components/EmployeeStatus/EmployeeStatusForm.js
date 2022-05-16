@@ -18,14 +18,14 @@ const EmployeeStatusForm = () => {
     const params = useParams();
 
     //Da li je ažuriran status
-    const [isEdit, setIsEdit] = useState(false);
+    const [isEdit, setIsEdit] = useState(undefined);
     const [message, setMessage] = useState("");
 
     const handleCloseAlert = (event, reason) => {
         if (reason === 'clickaway') {
             return;
         }
-        setIsEdit(false);
+        setIsEdit(undefined);
     };
 
     const handleChange = (event) => {
@@ -56,8 +56,6 @@ const EmployeeStatusForm = () => {
                 <RadioGroup row value={status} onChange={handleChange}> 
                     <FormControlLabel value="Radi" control={<Radio />} label="Radi" />
                     <FormControlLabel value="Ne radi" control={<Radio />} label="Ne radi" />
-                    <FormControlLabel value="Plaćeno odsustvo" control={<Radio />} label="Plaćeno odsustvo" />
-                    <FormControlLabel value="Neplaćeno odsustvo" control={<Radio />} label="Neplaćeno odsustvo" />
                 </RadioGroup>
             </FormControl>
             <LocalizationProvider dateAdapter={DateAdapter} locale={"sr"} >
@@ -90,13 +88,26 @@ const EmployeeStatusForm = () => {
                     Dodaj
                 </Button>
             </Box>
-            <Stack sx={{ width: '100%' }} spacing={2}>
-                <Snackbar open={isEdit} autoHideDuration={4000} onClose={handleCloseAlert}>
-                    <Alert variant="filled" severity="success">
-                        {message}
-                    </Alert>
-                </Snackbar>
-            </Stack>
+            { isEdit === true && (
+                    <Stack sx={{ width: '100%' }} spacing={2}>
+                        <Snackbar open={true} autoHideDuration={4000} onClose={handleCloseAlert}>
+                            <Alert variant="filled" severity="success">
+                                {message}
+                            </Alert>
+                        </Snackbar>
+                    </Stack>
+                )
+            } 
+            { isEdit === false && (
+                    <Stack sx={{ width: '100%' }} spacing={2}>
+                        <Snackbar open={true} autoHideDuration={4000} onClose={handleCloseAlert}>
+                            <Alert variant="filled" severity="error">
+                                {message}
+                            </Alert>
+                        </Snackbar>
+                    </Stack>
+                )
+            }
         </Box>
     );
 };
