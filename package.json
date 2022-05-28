@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
+  "engines": {
+    "node": "16.5.0",
+    "npm": "7.20.0"
+  },
   "scripts": {
     "build": "cd frontend && npm run build",
     "install-frontend": "cd frontend && npm install",
