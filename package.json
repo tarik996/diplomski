@@ -10,7 +10,7 @@
   "scripts": {
     "build": "cd frontend && npm run build",
     "install-frontend": "cd frontend && npm install",
-    "heroku-postbuild": "npm run install-client && npm run build",
+    "heroku-postbuild": "npm run install-frontend && npm run build",
     "start": "node backend/server.js",
     "script": "node backend/server.js",
     "server": "nodemon backend/server.js",
