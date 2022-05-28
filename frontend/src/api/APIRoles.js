@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const getRoles = async () => {
     try {
-        return await axios.get('http://localhost:5000/api/roles/getRoles');
+        return await axios.get('https://tarik-diplomski.herokuapp.com/api/roles/getRoles');
     } catch (error) {
         console.log(error);
     }

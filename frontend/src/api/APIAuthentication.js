@@ -2,7 +2,7 @@ import axios from "axios";
 
 const getLogOut = async () => {
     try {
-        return await axios.delete("http://localhost:5000/api/auth/logout");
+        return await axios.delete("https://tarik-diplomski.herokuapp.com/api/auth/logout");
     } catch (error) {
         console.log(error);
     }
@@ -10,7 +10,7 @@ const getLogOut = async () => {
 
 const isLoggedIn = async () => {
     try {
-        return await axios.get("http://localhost:5000/api/auth/loggedIn");
+        return await axios.get("https://tarik-diplomski.herokuapp.com/api/auth/loggedIn");
     } catch (error) {
         console.log(error);
     }
@@ -18,7 +18,7 @@ const isLoggedIn = async () => {
 
 const getUserRole = async () => {
     try {
-        return await axios.get("http://localhost:5000/api/auth/roleAuthorization");
+        return await axios.get("https://tarik-diplomski.herokuapp.com/api/auth/roleAuthorization");
     } catch (error) {
         console.log(error);
     }
@@ -26,7 +26,7 @@ const getUserRole = async () => {
 
 const getLogIn = async (email, password) => {
     try {
-        return await axios.post("http://localhost:5000/api/auth/login", { email: email, password: password });
+        return await axios.post("https://tarik-diplomski.herokuapp.com/api/auth/login", { email: email, password: password });
     } catch (error) {
         console.log(error);
     }
