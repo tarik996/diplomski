@@ -51,7 +51,7 @@ router.post('/login', async (req, res) => {
     if(!validPassword) return res.json({ message: 'Pogrešna lozinka ili email!', validation: false });
 
     //Provjerava da li ima uopšte status zaposlenik
-    const employeeStatus = await EmployeeStatus.find({userId: user._id}, { _id: 0, userId: 0, description: 0, __v: 0 });
+    const employeeStatus = await EmployeeStatus.find({userId: user._id}, { _id: 0, userId: 0, description: 0, __v: 0 }).sort({dateStatusChange: 1});
     if(employeeStatus.length === 0)
         return res.json({ message: 'Vaš status još nije ažuriran!', validation: false });
     

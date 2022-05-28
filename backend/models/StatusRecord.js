@@ -8,7 +8,7 @@ const statusRecordSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ['Radio', 'Odmor', 'Bolovanje', 'Plaćeno odsustvo', 'Neplaćeno odsustvo' ],
+        enum: ['Radio', 'Odmor', 'Službeni put','Bolovanje', 'Plaćeno odsustvo', 'Neplaćeno odsustvo' ],
         required: true
     },
     date: {

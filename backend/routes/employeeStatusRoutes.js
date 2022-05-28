@@ -13,7 +13,7 @@ router.post('/createEmployeeStatus/:_id', verifyAccessToken, adminRoleAuth, asyn
 
     if(error) return res.json({message: 'Status zaposlenika nije ažuriran!', isEdit: false});
     
-    const employeeStatusLast = await EmployeeStatus.find({userId: req.params._id}, { _id: 0, userId: 0, description: 0, __v: 0 });
+    const employeeStatusLast = await EmployeeStatus.find({userId: req.params._id}, { _id: 0, userId: 0, description: 0, __v: 0 }).sort({dateStatusChange: 1});
     const lastStatus = employeeStatusLast.pop();
 
     if(lastStatus === undefined) {
@@ -72,7 +72,7 @@ router.put('/updateEmployeeStatus/:_id', verifyAccessToken, adminRoleAuth, async
 });
 
 router.get('/getEmployeeStatus/:_id', verifyAccessToken, adminRoleAuth, async (req, res) => {
-    const employeeStatus = await EmployeeStatus.find({userId: req.params._id}, { userId: 0, __v: 0 });
+    const employeeStatus = await EmployeeStatus.find({userId: req.params._id}, { userId: 0, __v: 0 }).sort({dateStatusChange: 1});
     
     return res.json({employeeStatus: employeeStatus});
 });

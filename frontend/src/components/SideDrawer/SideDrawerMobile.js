@@ -9,7 +9,7 @@ import GroupIcon from '@mui/icons-material/Group';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import DoneIcon from '@mui/icons-material/Done';
-import WbSunnyIcon from '@mui/icons-material/WbSunny';
+import ReadMoreIcon from '@mui/icons-material/ReadMore';
 
 //Constants
 import { ROLES } from '../../constants/AuthorizationConstants';
@@ -141,12 +141,12 @@ const SideDrawerMobile = (props) => {
                                 <ListItemText primary="Prijava" />
                             </ListItem >
                         </Link>
-                        <Link to="#" style={{textDecoration: 'none', color:'black'}}>
-                            <ListItem button key="Odmori">
+                        <Link to="/otherStatus" style={{textDecoration: 'none', color:'black'}}>
+                            <ListItem button key="Ostali statusi">
                                 <ListItemIcon sx={{paddingLeft: 1}}>
-                                    <WbSunnyIcon />
+                                    <ReadMoreIcon />
                                 </ListItemIcon>
-                                <ListItemText primary="Odmori" />
+                                <ListItemText primary="Ostali statusi" />
                             </ListItem >
                         </Link>
                         <Link to="#" style={{textDecoration: 'none', color:'black'}}>

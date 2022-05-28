@@ -1,9 +1,11 @@
 import { useEffect, useState, useRef } from 'react';
 import { Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Toolbar, Typography, IconButton, Tooltip, Button, Stack, TablePagination, Snackbar, Alert, } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 //Icons
 import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import AddCircleOutlineRounded from '@mui/icons-material/AddCircleOutlineRounded';
 
 //Componenets
 import Search from '../Search';
@@ -16,7 +18,6 @@ import { exportPDF } from '../../helpers/ExportToPDF';
 
 //Modals
 import EditUsersWorkingHoursModal from './Modals/EditUsersWorkingHoursModal';
-
 
 const UsersWorkingHoursTable = () => {
     //Svi korisnici
@@ -115,6 +116,13 @@ const UsersWorkingHoursTable = () => {
                 <Typography sx={{ flex: '1 1 100%' }} variant="h6" id="tableTitle" component="div">
                     Radno vrijeme
                 </Typography>
+                <Link to="/workingReport">
+                    <Tooltip title="Lista">
+                        <IconButton>
+                            <AddCircleOutlineRounded />
+                        </IconButton>
+                    </Tooltip>
+                </Link>
                 <Tooltip title="PDF">
                     <IconButton onClick={() => exportPDF('Radno vrijeme', allUsersWorkingHours, tableHeaders, userJSON)}>
                         <PictureAsPdfIcon />
@@ -144,6 +152,11 @@ const UsersWorkingHoursTable = () => {
                                 <TableCell align="left">{row.workingHourTo}</TableCell>
                                 <TableCell align="right">
                                     <Stack direction="row" spacing={1} sx={{justifyContent: 'end'}}>
+                                        <Link to={`/userWorkingHours/${row._id}`} style={{textDecoration: 'none'}}>
+                                            <Button variant="contained" color="primary" startIcon={<PictureAsPdfIcon/>} >
+                                                Izvještaji
+                                            </Button>
+                                        </Link>
                                         <Button variant="contained" color="warning" startIcon={<ModeEditOutlineOutlinedIcon/>} onClick={() => {
                                             handleOpenModal(row)
                                         }}>

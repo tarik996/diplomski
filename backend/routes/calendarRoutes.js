@@ -2,8 +2,6 @@ const express = require('express');
 const router = express.Router();
 const calendarFunction = require('../helpers/calendarFunction');
 
-//Routes for screen 
-
 router.get('/getDaysInCurrentMonth', async (req, res) => {
     const currentDate = new Date();
     const currentDay = currentDate.getDate();
@@ -36,120 +34,6 @@ router.post('/getPreviousMonth', async (req, res) => {
     var today = calendarFunction.today(year, previousMonth);
 
     return res.json({daysInPreviousMonth: daysInPreviousMonth, previousMonthName: previousMonthName, month: previousMonth, year: year, today: today});
-});
-
-//Routes for mobile 
-
-router.get('/getDaysInCurrentWeek', async (req, res) => {
-    const currentDate = new Date();
-    const currentDay = currentDate.getDate();
-    const currentMonth = currentDate.getMonth()+1;
-    const currentYear = currentDate.getFullYear();
-    const daysInCurrentMonth = calendarFunction.daysInMonthMobile(currentYear, currentMonth);
-    
-    var daysInCurrentWeekDefault = calendarFunction.currentWeekValue(daysInCurrentMonth, currentDate)[0];
-    var daysInCurrentWeek = calendarFunction.currentWeekValue(daysInCurrentMonth, currentDate)[1];
-    var startOfWeek = calendarFunction.currentWeekValue(daysInCurrentMonth, currentDate)[2];
-    var endOfWeek = calendarFunction.currentWeekValue(daysInCurrentMonth, currentDate)[3];
-    var getStartOfWeekMonth = parseInt(startOfWeek.split('/')[1]);
-    var getEndOfWeekMonth = parseInt(endOfWeek.split('/')[1]);
-
-    var bool = false;
-
-    if(getStartOfWeekMonth === (new Date()).getMonth() + 1 || getEndOfWeekMonth === (new Date()).getMonth() + 1)
-        bool = true;
-
-    return res.json({currentDay: currentDay, startOfWeek: startOfWeek, endOfWeek: endOfWeek, daysInCurrentWeek: daysInCurrentWeek, daysInCurrentWeekDefault: daysInCurrentWeekDefault ,currentYear: currentYear, sameMonth: bool})
-});
-
-router.post('/getDaysInNextWeek', async (req, res) => {
-    var currentYear = parseInt(req.body.currentYear);
-    var calendar = calendarFunction.calendarForYear(currentYear);
-    const week = [...(req.body.daysInCurrentWeek)].toString();
-    const newCalendar = [];
-
-    for (var i = 0; i < calendar.length; i++) 
-        newCalendar.push(calendar[i].toString());
-
-    var indexOfNextWeek = newCalendar.indexOf(week);
-    var nextWeek = [];
-
-    if(indexOfNextWeek === calendar.length - 1) {
-        currentYear = currentYear + 1;
-        indexOfNextWeek = 0;
-        nextWeek = [...calendarFunction.calendarForYear(currentYear)][indexOfNextWeek];
-    } else {
-        indexOfNextWeek = indexOfNextWeek + 1;
-        nextWeek = calendar[indexOfNextWeek];
-    }
-
-    if(nextWeek.toString() === week) {
-        indexOfNextWeek = indexOfNextWeek + 1;
-        nextWeek = [...calendarFunction.calendarForYear(currentYear)][indexOfNextWeek]
-    }
-
-    var today = calendarFunction.weekValue(nextWeek)[0];
-    var startOfWeek = calendarFunction.weekValue(nextWeek)[1];
-    var endOfWeek = calendarFunction.weekValue(nextWeek)[2];
-    var daysInCurrentWeek = calendarFunction.weekValue(nextWeek)[3];
-    var getStartOfWeekMonth = parseInt(startOfWeek.split('/')[1]);
-    var getEndOfWeekMonth = parseInt(endOfWeek.split('/')[1]);
-
-    var bool = false;
-
-    if(getStartOfWeekMonth === (new Date()).getMonth() + 1 || getEndOfWeekMonth === (new Date()).getMonth() + 1 ) {
-        today = new Date().getDate();
-        bool = true;
-    }
-    if((getStartOfWeekMonth === (new Date()).getMonth() || getEndOfWeekMonth === (new Date()).getMonth()) && (new Date()).getDate() <= 8) 
-        bool = true;
-    
-    return res.json({nextWeek: nextWeek, daysInCurrentWeek: daysInCurrentWeek, currentYear: currentYear, today: today, startOfWeek: startOfWeek, endOfWeek: endOfWeek, sameMonth: bool});
-});
-
-router.post('/getDaysInPreviousWeek', async (req, res) => {
-    var currentYear = parseInt(req.body.currentYear);
-    var calendar = calendarFunction.calendarForYear(currentYear);
-    const week = [...(req.body.daysInCurrentWeek)].toString();
-    const newCalendar = [];
-
-    for (var i = 0; i < calendar.length; i++) 
-        newCalendar.push(calendar[i].toString());
-
-    var indexOfNextWeek = newCalendar.indexOf(week);
-    var nextWeek = [];
-
-    if(indexOfNextWeek === 0) {
-        currentYear = currentYear - 1;
-        indexOfNextWeek = [...calendarFunction.calendarForYear(currentYear)].length-1;
-        nextWeek = [...calendarFunction.calendarForYear(currentYear)][indexOfNextWeek];
-    } else {
-        indexOfNextWeek = indexOfNextWeek - 1;
-        nextWeek = calendar[indexOfNextWeek];
-    }
-
-    if(nextWeek.toString() === week) {
-        indexOfNextWeek = indexOfNextWeek - 1;
-        nextWeek = [...calendarFunction.calendarForYear(currentYear)][indexOfNextWeek]
-    }
-
-    var today = calendarFunction.weekValue(nextWeek)[0];
-    var startOfWeek = calendarFunction.weekValue(nextWeek)[1];
-    var endOfWeek = calendarFunction.weekValue(nextWeek)[2];
-    var daysInCurrentWeek = calendarFunction.weekValue(nextWeek)[3];
-    var getStartOfWeekMonth = parseInt(startOfWeek.split('/')[1]);
-    var getEndOfWeekMonth = parseInt(endOfWeek.split('/')[1]);
-
-    var bool = false;
-
-    if(getStartOfWeekMonth === (new Date()).getMonth() + 1 || getEndOfWeekMonth === (new Date()).getMonth() + 1 ) {
-        today = new Date().getDate();
-        bool = true;
-    }
-    if((getStartOfWeekMonth === (new Date()).getMonth() || getEndOfWeekMonth === (new Date()).getMonth()) && (new Date()).getDate() <= 8) 
-        bool = true;
-
-    return res.json({nextWeek: nextWeek, daysInCurrentWeek: daysInCurrentWeek, currentYear: currentYear, today: today, startOfWeek: startOfWeek, endOfWeek: endOfWeek, sameMonth: bool});
 });
 
 module.exports = router;

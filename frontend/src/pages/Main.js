@@ -26,9 +26,14 @@ import EditUserForm from '../components/User/EditUserForm';
 
 //EmployeesWorkingHours
 import UsersWorkingHoursTable from '../components/UsersWorkingHours/UsersWorkingHoursTable';
+import WorkingHoursReport from '../components/UsersWorkingHours/WorkingHoursReport';
+import UserWorkingHoursReport from '../components/UsersWorkingHours/UserWorkingHoursReport';
 
 //UserCheckIn
 import UserCheckInForm from '../components/UserCkeckIn/UserCheckInForm';
+
+//OtherStatus
+import OtherStatus from '../components/OtherStatus/OtherStatus';
 
 //Status
 import EmployeeStatusForm from '../components/EmployeeStatus/EmployeeStatusForm';
@@ -234,15 +239,57 @@ const Router = () => {
                             }
                         </AdminRoute>
                     } />
-                    <Route path="/dailyCheckIn" element={
-                        <PrivateRoute>
+                    <Route path='/workingReport' element={
+                        <AdminRoute>
                             { matches ? (
                                     <Mobile open={open} >
-                                        <UserCheckInForm page={'Prijava'} />
+                                        <WorkingHoursReport page={'Radno vrijeme izvještaji'} />
                                     </Mobile>
                                 ) : (
                                     <Screen open={open} >
+                                        <WorkingHoursReport page={'Radno vrijeme izvještaji'} />
+                                    </Screen>
+                                )
+                            }
+                        </AdminRoute>
+                    } />
+                    <Route path='/userWorkingHours/:userId' element={
+                        <AdminRoute>
+                            { matches ? (
+                                    <Mobile open={open} >
+                                        <UserWorkingHoursReport page={'Radno vrijeme izvještaji'} />
+                                    </Mobile>
+                                ) : (
+                                    <Screen open={open} >
+                                        <UserWorkingHoursReport page={'Radno vrijeme izvještaji'} />
+                                    </Screen>
+                                )
+                            }
+                        </AdminRoute>
+                    } />
+                    <Route path="/dailyCheckIn" element={
+                        <PrivateRoute>
+                            { matches ? (
+                                    <Mobile open={open} page={'Prijava'} >
                                         <UserCheckInForm page={'Prijava'} />
+                                    </Mobile>
+                                ) : (
+                                    <Screen open={open} page={'Prijava'} >
+                                        <UserCheckInForm page={'Prijava'} />
+                                    </Screen>
+                                )
+                            }
+                        </PrivateRoute>
+                    } />
+                    <Route path="/otherStatus" element={
+                        <PrivateRoute>
+                            { matches ? (
+                                    <Mobile open={open}  page={'Ostali statusi'} >
+                                        <OtherStatus page={'Ostali statusi'} />
+                                    </Mobile>
+                                ) : (
+                                    <Screen open={open}  page={'Ostali statusi'} >
+                                        <OtherStatus page={'Ostali statusi'} />
                                     </Screen>
                                 )
                             }
