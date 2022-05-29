@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Route } from 'react-router-dom';
 import { useMediaQuery, Box } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
@@ -100,7 +100,7 @@ const Router = () => {
                         <Navbar toggleSideDrawer={toggleSideDrawer} open={open} callBack={callBack}/>
                     </Box>
                 )}
-                <Routes>
+                <HashRouter>
                     <Route path="/" element={
                         <PublicRoute>
                             <Login message={message} isLogOut={isLogOut} setIsLogOut={setIsLogOut}/>
@@ -372,7 +372,7 @@ const Router = () => {
                             }
                         </PrivateRoute>
                     } />
-                </Routes>
+                </HashRouter>
             </BrowserRouter>
         </Box>
     )

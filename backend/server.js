@@ -5,7 +5,6 @@ const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-console.log(__dirname)
 
 //Import routes
 const userRoutes = require('./routes/userRoutes');
