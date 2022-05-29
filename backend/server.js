@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+console.log(__dirname)
 
 //Import routes
 const userRoutes = require('./routes/userRoutes');
@@ -32,7 +33,7 @@ app.use(cors({
 
 if(process.env.NODE_ENV === 'production') {
     app.use(express.static('frontend/build'));
-    app.get("*", (req, res) => { res.sendFile(path.resolve(__dirname, "frontend/build", "index.html")); }); 
+    app.get("/", (req, res) => { res.sendFile(path.resolve(__dirname, "../frontend/build", "index.html")); }); 
 }
 
 //Route middlewares
