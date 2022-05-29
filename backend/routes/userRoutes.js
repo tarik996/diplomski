@@ -7,7 +7,7 @@ const generatePassword = require('../helpers/generatePassword');
 const sendEmail = require('../helpers/sendEmail');
 const { jmbgValidation } = require('../validation/userValidation');
 const { verifyAccessToken } = require('../middlewares/verifyTokenMiddleware');
-const { adminRoleAuth } = require('../middlewares/roleAuthMiddleware');
+const { adminRoleAuth, adminAccountantRoleAuth, accountantRoleAuth } = require('../middlewares/roleAuthMiddleware');
 const { createUserValidation } = require('../validation/userValidation');
 const { errorMessage } = require('../helpers/errorMessage');
 
@@ -70,6 +70,61 @@ router.put('/edit/:_id', verifyAccessToken, adminRoleAuth, async (req, res) => {
             hourlyWage: req.body.hourlyWage, 
             vacation: req.body.vacation, 
             roleId: editUserRoleID
+        }
+
+        await User.findOneAndUpdate({_id: req.params._id}, update, { new: true });
+
+        return res.json({message: 'Informacije o korisniku su uspješno ažurirane!', bool: bool, messages: messages, isEdit: true});
+    } catch (error) {
+        res.send(error);
+    }
+});
+
+//Za računovođe da mogu mjenjati plate i lične odbitke
+router.put('/editSallary/:_id', verifyAccessToken, accountantRoleAuth, async (req, res) => {
+    //Validacija podataka
+    const { error } = createUserValidation(req.body);
+
+    var bool = JSON.parse(JSON.stringify(USERBOOL));
+    var messages = JSON.parse(JSON.stringify(USERMESSAGES));
+    
+    if(error) {
+        const errorMessages = error.stack.replace("ValidationError:","").split('.');
+        const returnValue = errorMessage(errorMessages, bool, messages);
+
+        messages = returnValue[0]
+        bool = returnValue[1]; 
+
+        if(!jmbgValidation(req.body.jmbg) && messages.jmbgError !== "JMBG je obavezan!") {
+            bool.jmbgBool = true;
+            messages.jmbgError = "Jmbg nije validan!";
+        }
+
+        return res.json({message: '', bool: bool, messages: messages, isEdit: undefined});
+    }
+
+    if(!jmbgValidation(req.body.jmbg)) {
+        bool.jmbgBool = true;
+        messages.jmbgError = "Jmbg nije validan!";
+
+        return res.json({message: '', bool: bool, messages: messages, isEdit: undefined});
+    }
+
+    //Provjera da li postoji drugi korisnik sa istim jmbg u bazi
+    const editUser = await User.findById({ _id: req.params._id }, {_id: 0, password: 0, __v: 0});
+    const sameJMBG = await User.find({_id: { $nin: req.params._id}, jmbg: req.body.jmbg});
+    const sameEmail = await User.find({_id: { $nin: req.params._id}, email: req.body.email});
+
+    if(sameJMBG.length === 1) 
+        return res.json({message: 'Postoji drugi korisnik sa istim jmbg!', bool: bool, messages: messages, user: editUser, isEdit: false});
+    if(sameEmail.length === 1) 
+        return res.json({message: 'Postoji drugi korisnik sa istim emailom!', bool: bool, messages: messages, user: editUser, isEdit: false});
+
+    try {
+        //Ažuriranje podataka
+        const update = {  
+            personalDeductions: req.body.personalDeductions,
+            hourlyWage: req.body.hourlyWage,
         }
 
         await User.findOneAndUpdate({_id: req.params._id}, update, { new: true });
@@ -154,7 +209,7 @@ router.post('/create', verifyAccessToken, adminRoleAuth, async (req, res) => {
     }
 });
 
-router.get('/getAllUsers', verifyAccessToken, adminRoleAuth, async (req, res) => {
+router.get('/getAllUsers', verifyAccessToken, adminAccountantRoleAuth, async (req, res) => {
     try {
         const allUsers = await User.find();
         const tableHeaders = [['Id', 'Ime i prezime', 'JMBG', 'Adresa', 'Email', 'Radno mjesto', 'Lični odbici', 'Satnica', 'Ukupni godišnji']];
@@ -185,7 +240,7 @@ router.get('/getAllUsers', verifyAccessToken, adminRoleAuth, async (req, res) =>
     }
 });
 
-router.get('/profile/:_id', verifyAccessToken, adminRoleAuth, async (req, res) => {
+router.get('/profile/:_id', verifyAccessToken, adminAccountantRoleAuth, async (req, res) => {
     try {
         const user = await User.findById({ _id: req.params._id }, { id: 0, password: 0, __v: 0 });
         const userRole = await Role.findById({_id: user.roleId});
@@ -237,7 +292,7 @@ router.get('/yourProfile', verifyAccessToken, async (req, res) => {
 //Radno vrijeme uposlenika
 
 //Vraća radno vrijeme za svakog korisnika
-router.get('/getAllUsersWorkingHours', verifyAccessToken, adminRoleAuth, async (req, res) => {
+router.get('/getAllUsersWorkingHours', verifyAccessToken, adminAccountantRoleAuth, async (req, res) => {
     try {
         const allUsers = await User.find();
         const tableHeaders = [['Id', 'Ime i prezime', 'Radno vrijeme od', 'Radvno vrijeme do']];
@@ -265,7 +320,7 @@ router.get('/getAllUsersWorkingHours', verifyAccessToken, adminRoleAuth, async (
 
 
 //Promjena radnog vremena za korisnike
-router.put('/editUserWorkingHours', verifyAccessToken, adminRoleAuth, async (req, res) => {
+router.put('/editUserWorkingHours', verifyAccessToken, adminAccountantRoleAuth, async (req, res) => {
     //Validacija podataka
     const workingHourFrom = (req.body.workingHourFrom).split(":");
     const workingHourTo = (req.body.workingHourTo).split(":");

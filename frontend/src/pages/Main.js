@@ -22,12 +22,19 @@ import ViewYourProfile from '../components/User/ViewYourProfile';
 import UsersTable from '../components/User/UsersTable';
 import CreateUserForm from '../components/User/CreateUserForm';
 import ViewProfile from '../components/User/ViewProfile';
+import ViewProfileSallary from '../components/User/ViewProfileSallary';
 import EditUserForm from '../components/User/EditUserForm';
+import EditUserFormSallary from '../components/User/EditUserFormSallary';
 
 //EmployeesWorkingHours
 import UsersWorkingHoursTable from '../components/UsersWorkingHours/UsersWorkingHoursTable';
 import WorkingHoursReport from '../components/UsersWorkingHours/WorkingHoursReport';
 import UserWorkingHoursReport from '../components/UsersWorkingHours/UserWorkingHoursReport';
+
+//Sallary
+import Sallary from '../components/Sallary/Sallary';
+import SallaryReport from '../components/Sallary/SallaryReport';
+import UserSallaryReport from '../components/Sallary/UserSallaryReport';
 
 //UserCheckIn
 import UserCheckInForm from '../components/UserCkeckIn/UserCheckInForm';
@@ -44,7 +51,7 @@ import EditEmployeeStatus from '../components/EmployeeStatus/EditEmployeeStatus'
 import AuthContext from '../context/AuthContext';
 
 //Route access
-import { PrivateRoute , PublicRoute, AdminRoute } from '../helpers/AccessRoute';
+import { PrivateRoute , PublicRoute, AdminRoute, AdminAccountantRoute, AccountantRoute } from '../helpers/AccessRoute';
 
 const Router = () => {
     const theme = useTheme();
@@ -127,8 +134,22 @@ const Router = () => {
                             }
                         </PrivateRoute>
                     } />
+                    <Route path="/userSallaryReport" element={
+                        <PrivateRoute>
+                            { matches ? (
+                                    <Mobile open={open} >
+                                        <UserSallaryReport page={'Profil'} />
+                                    </Mobile>
+                                ) : (
+                                    <Screen open={open} >
+                                        <UserSallaryReport page={'Profil'} />
+                                    </Screen>
+                                )
+                            }
+                        </PrivateRoute>
+                    } />
                     <Route path="/allUsers" element={
-                        <AdminRoute>
+                        <AdminAccountantRoute>
                             { matches ? (
                                     <Mobile open={open} >
                                         <UsersTable page={'Zaposlenici'} />
@@ -139,7 +160,7 @@ const Router = () => {
                                     </Screen>
                                 )
                             }
-                        </AdminRoute>
+                        </AdminAccountantRoute>
                     } />
                     <Route path="/createUser" element={
                         <AdminRoute>
@@ -182,6 +203,48 @@ const Router = () => {
                                 )
                             }
                         </AdminRoute>
+                    } />
+                    <Route path="/editUserSallary/:userId" element={
+                        <AccountantRoute>
+                            { matches ? (
+                                    <Mobile open={open} >
+                                        <EditUserFormSallary page={'Promjeni korisnika'} />
+                                    </Mobile>
+                                ) : (
+                                    <Screen open={open} >
+                                        <EditUserFormSallary page={'Promjeni korisnika'} />
+                                    </Screen>
+                                )
+                            }
+                        </AccountantRoute>
+                    } />
+                    <Route path="/profileSallary/:userId" element={
+                        <AccountantRoute>
+                            { matches ? (
+                                    <Mobile open={open} >
+                                        <ViewProfileSallary page={'Profil'} />
+                                    </Mobile>
+                                ) : (
+                                    <Screen open={open} >
+                                        <ViewProfileSallary page={'Profil'} />
+                                    </Screen>
+                                )
+                            }
+                        </AccountantRoute>
+                    } />
+                    <Route path="/calculateSallary" element={
+                        <AccountantRoute>
+                            { matches ? (
+                                    <Mobile open={open} >
+                                        <Sallary page={'Obračun plata'} />
+                                    </Mobile>
+                                ) : (
+                                    <Screen open={open} >
+                                        <Sallary page={'Obračun plata'} />
+                                    </Screen>
+                                )
+                            }
+                        </AccountantRoute>
                     } />
                     <Route path="/createEmployeeStatus/:userId" element={
                         <AdminRoute>
@@ -226,7 +289,7 @@ const Router = () => {
                         </AdminRoute>
                     } />
                     <Route path="/employeesWorkingHours" element={
-                        <AdminRoute>
+                        <AdminAccountantRoute>
                             { matches ? (
                                     <Mobile open={open} >
                                         <UsersWorkingHoursTable page={'Radno vrijeme'} />
@@ -237,10 +300,24 @@ const Router = () => {
                                     </Screen>
                                 )
                             }
-                        </AdminRoute>
+                        </AdminAccountantRoute>
+                    } />
+                    <Route path="/sallaryReport" element={
+                        <AdminAccountantRoute>
+                            { matches ? (
+                                    <Mobile open={open} >
+                                        <SallaryReport page={'Plate izvještaj'} />
+                                    </Mobile>
+                                ) : (
+                                    <Screen open={open} >
+                                        <SallaryReport page={'Plate izvještaj'} />
+                                    </Screen>
+                                )
+                            }
+                        </AdminAccountantRoute>
                     } />
                     <Route path='/workingReport' element={
-                        <AdminRoute>
+                        <AdminAccountantRoute>
                             { matches ? (
                                     <Mobile open={open} >
                                         <WorkingHoursReport page={'Radno vrijeme izvještaji'} />
@@ -251,10 +328,10 @@ const Router = () => {
                                     </Screen>
                                 )
                             }
-                        </AdminRoute>
+                        </AdminAccountantRoute>
                     } />
                     <Route path='/userWorkingHours/:userId' element={
-                        <AdminRoute>
+                        <AdminAccountantRoute>
                             { matches ? (
                                     <Mobile open={open} >
                                         <UserWorkingHoursReport page={'Radno vrijeme izvještaji'} />
@@ -265,7 +342,7 @@ const Router = () => {
                                     </Screen>
                                 )
                             }
-                        </AdminRoute>
+                        </AdminAccountantRoute>
                     } />
                     <Route path="/dailyCheckIn" element={
                         <PrivateRoute>

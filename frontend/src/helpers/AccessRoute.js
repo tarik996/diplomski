@@ -30,4 +30,26 @@ function AdminRoute({ children }) {
     return <Navigate to='/' />
 }
 
-export { PublicRoute, PrivateRoute, AdminRoute };
+function AccountantRoute({ children }) {
+    const { loggedIn, authorization } = useContext(AuthContext);
+
+    if(loggedIn === true && authorization === ROLES.ACCOUNTANT)
+        return children;
+    else if(loggedIn === true && authorization.a === false)
+        return <Navigate to='/home' />
+
+    return <Navigate to='/' />
+}
+
+function AdminAccountantRoute({ children }) {
+    const { loggedIn, authorization } = useContext(AuthContext);
+
+    if(loggedIn === true && (authorization === ROLES.ADMINISTRATOR || authorization === ROLES.ACCOUNTANT))
+        return children;
+    else if(loggedIn === true && authorization.a === false)
+        return <Navigate to='/home' />
+
+    return <Navigate to='/' />
+}
+
+export { PublicRoute, PrivateRoute, AdminRoute, AccountantRoute, AdminAccountantRoute };

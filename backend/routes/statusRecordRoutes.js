@@ -5,7 +5,7 @@ const StatusRecord = require('../models/StatusRecord');
 const EmployeeStatus = require('../models/EmployeeStatus');
 const User = require('../models/User');
 const { verifyAccessToken } = require('../middlewares/verifyTokenMiddleware');
-const { adminRoleAuth } = require('../middlewares/roleAuthMiddleware');
+const { adminRoleAuth, adminAccountantRoleAuth, accountantRoleAuth } = require('../middlewares/roleAuthMiddleware');
 
 //Constants
 const { STATUSRECORD } = require('../constants/employeeStatusRecordConstants');
@@ -185,7 +185,7 @@ router.post('/setOtherStatus', verifyAccessToken, async (req, res) => {
     }
 });
 
-router.get('/getWorkingReport/:_id/:month/:year', verifyAccessToken, adminRoleAuth, async (req, res) => {
+router.get('/getWorkingReport/:_id/:month/:year', verifyAccessToken, adminAccountantRoleAuth, async (req, res) => {
     const userEmployeeStatus = await EmployeeStatus.find({userId: req.params._id}, {_id: 0, userId: 0, status: 0, description: 0, __v: 0}).sort({dateStatusChange: 1});
     const userReportStatus = await StatusRecord.aggregate([
         {$match:
@@ -228,7 +228,7 @@ router.get('/getWorkingReport/:_id/:month/:year', verifyAccessToken, adminRoleAu
     }
 });
 
-router.get('/getWholeWorkingReport/:_id', verifyAccessToken, adminRoleAuth, async (req, res) => { 
+router.get('/getWholeWorkingReport/:_id', verifyAccessToken, adminAccountantRoleAuth, async (req, res) => { 
     const userEmployeeStatus = await EmployeeStatus.find({userId: req.params._id}, {_id: 0, userId: 0, status: 0, description: 0, __v: 0}).sort({dateStatusChange: 1});
     const userReportStatus = await StatusRecord.find({userId: req.params._id}).sort({date: 1});
 
@@ -260,7 +260,7 @@ router.get('/getWholeWorkingReport/:_id', verifyAccessToken, adminRoleAuth, asyn
 });
 
 
-router.get('/getWorkingReportForAllUsers/:month/:year', verifyAccessToken, adminRoleAuth, async (req, res) => {
+router.get('/getWorkingReportForAllUsers/:month/:year', verifyAccessToken, adminAccountantRoleAuth, async (req, res) => {
     const userReportStatus = await StatusRecord.aggregate([
         {$match:
             {$expr: 
@@ -309,7 +309,7 @@ router.get('/getWorkingReportForAllUsers/:month/:year', verifyAccessToken, admin
     }
 });
 
-router.get('/getWholeWorkingReportForAllUsers', verifyAccessToken, adminRoleAuth, async (req, res) => { 
+router.get('/getWholeWorkingReportForAllUsers', verifyAccessToken, adminAccountantRoleAuth, async (req, res) => { 
     const userEmployeeStatus = await EmployeeStatus.find({}, {_id: 0, userId: 0, status: 0, description: 0, __v: 0}).sort({dateStatusChange: 1});
     const userReportStatus = await StatusRecord.aggregate([
         {$lookup: 

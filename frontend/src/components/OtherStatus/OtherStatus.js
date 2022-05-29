@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Accordion, AccordionSummary, AccordionDetails, Typography, Card, CardContent, CardActions, TextField, Button, Box, Alert, Snackbar, Stack } from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { MobileDatePicker, LocalizationProvider } from "@mui/lab";
 import DateAdapter from '@mui/lab/AdapterMoment'
 import moment from "moment";
 import "moment/locale/sr";
+
+//Icons
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 //API
 import { setHolidays, setOtherStatus, getHolidayDayLeft } from '../../api/APIStatusRecord';

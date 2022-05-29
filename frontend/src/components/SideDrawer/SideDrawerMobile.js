@@ -10,6 +10,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import DoneIcon from '@mui/icons-material/Done';
 import ReadMoreIcon from '@mui/icons-material/ReadMore';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 
 //Constants
 import { ROLES } from '../../constants/AuthorizationConstants';
@@ -86,7 +87,7 @@ const SideDrawerMobile = (props) => {
                                     <ListItemText primary="Radno vrijeme" />
                                 </ListItem >
                             </Link>
-                            <Link to="#" style={{textDecoration: 'none', color:'black'}}>
+                            <Link to="/sallaryReport" style={{textDecoration: 'none', color:'black'}}>
                                 <ListItem button key="PlateIzvjestaj">
                                     <ListItemIcon sx={{paddingLeft: 1}}>
                                         <PictureAsPdfIcon />
@@ -114,7 +115,23 @@ const SideDrawerMobile = (props) => {
                                     <ListItemText primary="Zaposlenici" />
                                 </ListItem >
                             </Link>
-                            <Link to="#" style={{textDecoration: 'none', color:'black'}}>
+                            <Link to="/employeesWorkingHours" style={{textDecoration: 'none', color:'black'}}>
+                                <ListItem button key="RadnoVrijeme">
+                                    <ListItemIcon sx={{paddingLeft: 1}}>
+                                        <AccessTimeIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Radno vrijeme" />
+                                </ListItem >
+                            </Link>
+                            <Link to="/calculateSallary" style={{textDecoration: 'none', color:'black'}}>
+                                <ListItem button key="ObračunPlata">
+                                    <ListItemIcon sx={{paddingLeft: 1}}>
+                                        <AttachMoneyIcon />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Obračun plata" />
+                                </ListItem >
+                            </Link>
+                            <Link to="/sallaryReport" style={{textDecoration: 'none', color:'black'}}>
                                 <ListItem button key="PlateIzvjestaj">
                                     <ListItemIcon sx={{paddingLeft: 1}}>
                                         <PictureAsPdfIcon />
@@ -149,7 +166,7 @@ const SideDrawerMobile = (props) => {
                                 <ListItemText primary="Ostali statusi" />
                             </ListItem >
                         </Link>
-                        <Link to="#" style={{textDecoration: 'none', color:'black'}}>
+                        <Link to="/userSallaryReport" style={{textDecoration: 'none', color:'black'}}>
                             <ListItem button key="PlateIzvjestaj">
                                 <ListItemIcon sx={{paddingLeft: 1}}>
                                     <PictureAsPdfIcon />

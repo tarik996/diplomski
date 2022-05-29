@@ -40,6 +40,14 @@ const changeUser = async (user, params) => {
     }
 }
 
+const changeUserSallary = async (user, params) => {
+    try {
+        return await axios.put(`https://tarik-diplomski.herokuapp.com/api/users/editSallary/${params.userId}`, user);
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 //Radno vrijeme
 
 const getAllUsersWorkingHours = async () => {
@@ -66,4 +74,4 @@ const getYourWorkingHours = async () => {
     }
 }
 
-export { getAllUsers, createUser, getUserData, changeUser, getYourProfileData, getAllUsersWorkingHours, changeUserWorkingHours, getYourWorkingHours };
+export { getAllUsers, createUser, getUserData, changeUser, getYourProfileData, getAllUsersWorkingHours, changeUserWorkingHours, getYourWorkingHours, changeUserSallary };

@@ -97,12 +97,12 @@
 }
 
 #calendar .weekend {
-    background: #ba000d;
+    background: rgb(220,220,220);
     color: #666;
 }
 
 #calendar .other-month-weekend {
-    background: #ff7961;
+    background: rgba(220,220,220, 0.8);
 	color: #666;
 }
 

@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const app = express();
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
@@ -14,6 +15,7 @@ const fontsRoutes = require('./routes/fontRoutes');
 const roleRoutes = require('./routes/roleRoutes');
 const employeeStatusRoutes = require('./routes/employeeStatusRoutes');
 const statusRecordRoutes = require('./routes/statusRecordRoutes');
+const sallaryRoutes = require('./routes/sallaryRoutes');
 
 dotenv.config();
 
@@ -30,6 +32,7 @@ app.use(cors({
 
 if(process.env.NODE_ENV === 'production') {
     app.use(express.static('frontend/build'));
+    app.get("*", (req, res) => { res.sendFile(path.resolve(__dirname, "../frontend/build", "index.html")); }); 
 }
 
 //Route middlewares
@@ -41,6 +44,7 @@ app.use('/api/fonts', fontsRoutes);
 app.use('/api/roles', roleRoutes);
 app.use('/api/employeeStatus', employeeStatusRoutes);
 app.use('/api/statusRecord', statusRecordRoutes);
+app.use('/api/sallary', sallaryRoutes);
 
 //Listening port
 app.listen(process.env.PORT, () => console.log(`Server is running on port ${process.env.PORT}`));
