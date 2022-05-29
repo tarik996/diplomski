@@ -26,10 +26,6 @@ connectDB();
 //Middleware
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({
-    origin: ["http://localhost:3000"],
-    credentials: true
-}));
 
 if(process.env.NODE_ENV === 'production') {
     app.use(express.static('frontend/build'));
@@ -41,6 +37,11 @@ if(process.env.NODE_ENV === 'production') {
           }) 
     }); 
 }
+else 
+    app.use(cors({
+        origin: ["http://localhost:3000"],
+        credentials: true
+    }));
 
 //Route middlewares
 app.use('/api/users', userRoutes);
