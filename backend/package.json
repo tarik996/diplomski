@@ -2,19 +2,21 @@
   "name": "diplomski",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "engines": {
     "node": "16.5.0",
     "npm": "7.20.0"
   },
   "scripts": {
-    "build": "cd frontend && npm run build",
-    "install-frontend": "cd frontend && npm install",
+    "build": "--prefix ../frontend && npm run build",
+    "install-frontend": "--prefix ../frontend && npm install",
     "heroku-postbuild": "npm run install-frontend && npm run build",
-    "start": "node backend/server.js",
-    "script": "node backend/server.js",
-    "server": "nodemon backend/server.js",
-    "client": "npm start --prefix frontend",
+    "start": "node index.js",
+    "test": "jest --coverage --verbose --detectOpenHandles",
+    "test:watch": "npm run test -- --watch",
+    "script": "node index.js",
+    "server": "nodemon index.js",
+    "client": "npm start --prefix ../frontend",
     "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "keywords": [],
@@ -28,6 +30,7 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "fs": "^0.0.1-security",
+    "jest": "^28.1.0",
     "jmbg": "^1.6.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.12",
@@ -36,6 +39,7 @@
   },
   "devDependencies": {
     "concurrently": "^6.3.0",
-    "nodemon": "^2.0.14"
+    "nodemon": "^2.0.14",
+    "supertest": "^6.2.3"
   }
 }
