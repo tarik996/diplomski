@@ -8,12 +8,10 @@
     "npm": "7.20.0"
   },
   "scripts": {
-    "build": "--prefix frontend && npm run build",
-    "install-frontend": "--prefix frontend && npm install",
+    "build": "npm run build --prefix frontend",
+    "install-frontend": "npm install --prefix frontend",
     "heroku-postbuild": "npm run install-frontend && npm run build",
     "start": "node backend/index.js",
-    "test": "jest tests --coverage tests --verbose --detectOpenHandles",
-    "test:watch": "npm run test -- --watch",
     "script": "node backend/index.js",
     "server": "nodemon backend/index.js",
     "client": "npm start --prefix frontend",
