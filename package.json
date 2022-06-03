@@ -8,8 +8,8 @@
     "npm": "7.20.0"
   },
   "scripts": {
-    "build": "--prefix ../frontend && npm run build",
-    "install-frontend": "--prefix ../frontend && npm install",
+    "build": "--prefix frontend && npm run build",
+    "install-frontend": "--prefix frontend && npm install",
     "heroku-postbuild": "npm run install-frontend && npm run build",
     "start": "node backend/index.js",
     "test": "jest tests --coverage tests --verbose --detectOpenHandles",
