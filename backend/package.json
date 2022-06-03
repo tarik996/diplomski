@@ -1,45 +1,20 @@
 {
-  "name": "diplomski",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "engines": {
-    "node": "16.5.0",
-    "npm": "7.20.0"
-  },
-  "scripts": {
-    "build": "--prefix ../frontend && npm run build",
-    "install-frontend": "--prefix ../frontend && npm install",
-    "heroku-postbuild": "npm run install-frontend && npm run build",
-    "start": "node index.js",
-    "test": "jest --coverage --verbose --detectOpenHandles",
-    "test:watch": "npm run test -- --watch",
-    "script": "node index.js",
-    "server": "nodemon index.js",
-    "client": "npm start --prefix ../frontend",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@hapi/joi": "^17.1.1",
-    "bcrypt": "^5.0.1",
-    "cookie-parser": "^1.4.5",
-    "cors": "^2.8.5",
-    "dotenv": "^10.0.0",
-    "express": "^4.17.1",
-    "fs": "^0.0.1-security",
-    "jest": "^28.1.0",
-    "jmbg": "^1.6.2",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.0.12",
-    "node-calendar": "^0.1.5",
-    "nodemailer": "^6.7.2"
-  },
-  "devDependencies": {
-    "concurrently": "^6.3.0",
-    "nodemon": "^2.0.14",
-    "supertest": "^6.2.3"
-  }
+    "name": "testbackend",
+    "version": "1.0.0",
+    "description": "",
+    "main": "",
+    "engines": {},
+    "scripts": {
+        "test": "jest tests --coverage tests --verbose --detectOpenHandles",
+        "test:watch": "npm run test -- --watch"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "jest": "^28.1.0"
+    },
+    "devDependencies": {
+        "supertest": "^6.2.3"
+    }
 }

@@ -26,9 +26,13 @@ describe('Calendar Routes', () => {
             })
             .then(async (response) => {
                 const res = await request(server)
-                    .get('/api/calendar/getDaysInCurrentMonth')
+                    .post('/api/calendar/getNextMonth')
+                    .send({
+                        month: 5, 
+                        year: 2022
+                    })
                     .set('Cookie', [response.headers['set-cookie'][0]]);
-                expect(res.body.currentDay).toEqual(new Date().getDate());
+                expect(res.body.nextMonthName).toEqual('Jun');
             });
     });
 });
