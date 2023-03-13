@@ -52,6 +52,7 @@ app.use('/api/employeeStatus', employeeStatusRoutes);
 app.use('/api/statusRecord', statusRecordRoutes);
 app.use('/api/sallary', sallaryRoutes);
 
+app.use(express.static(path.join(__dirname, 'build')));
 app.get('/*', function(req,res) {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
