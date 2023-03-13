@@ -52,6 +52,10 @@ app.use('/api/employeeStatus', employeeStatusRoutes);
 app.use('/api/statusRecord', statusRecordRoutes);
 app.use('/api/sallary', sallaryRoutes);
 
+app.get('/*', function(req,res) {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
 var server = app;
 
 module.exports = server;
