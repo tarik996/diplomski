@@ -5,14 +5,15 @@
     "main": "",
     "engines": {},
     "scripts": {
-        "test": "jest tests --coverage tests --verbose --detectOpenHandles",
+        "test": "jest tests --coverage tests --verbose --detectOpenHandles --no-cache --watchAll",
         "test:watch": "npm run test -- --watch"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "jest": "^28.1.0"
+        "jest": "^28.1.0",
+        "sib-api-v3-sdk": "^8.5.0"
     },
     "devDependencies": {
         "supertest": "^6.2.3"

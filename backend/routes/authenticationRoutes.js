@@ -43,7 +43,7 @@ router.get('/roleAuthorization', async (req, res) => {
 
 router.post('/login', async (req, res) => {
     //Provjera da li postoji korisnik sa unešenim emailom
-    const user = await User.findOne({ email: req.body.email });
+    const user = await User.findOne({ email: req.body.email }).catch((error => console.log(error)));
     if(!user) return res.json({ message: 'Pogrešna lozinka ili email!', validation: false });
 
     //Provjera da li je lozinka tačna

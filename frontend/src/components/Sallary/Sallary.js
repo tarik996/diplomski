@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Box, Card, CardContent, CardActions, TextField, Typography, Button, Stack, Snackbar, Alert, CardHeader, Avatar, Divider, IconButton } from "@mui/material";
-import { MobileDatePicker, LocalizationProvider } from "@mui/lab";
 import { blue } from '@mui/material/colors';
-import DateAdapter from '@mui/lab/AdapterMoment'
+import { MobileDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import moment from "moment";
 import "moment/locale/sr";
 
@@ -56,7 +56,7 @@ const Sallary = () => {
                 />
                 <Divider variant='middle'/>
                 <CardContent>   
-                    <LocalizationProvider dateAdapter={DateAdapter} locale={"sr"} >
+                    <LocalizationProvider dateAdapter={AdapterMoment} locale={"sr"} >
                         <Box>
                             <Typography sx={{marginBottom: 1, marginTop: 1}}>Odaberite početak obračuna</Typography>
                             <MobileDatePicker 

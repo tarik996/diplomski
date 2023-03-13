@@ -1,8 +1,9 @@
 import axios from "axios";
+import { api } from './config';
 
 const calculateSallary = async (dateFrom, dateTo) => {
     try {
-        return await axios.post('https://tarik-diplomski.herokuapp.com/api/sallary/calculateSallary', {dateFrom: dateFrom, dateTo: dateTo});
+        return await axios.post(api + '/api/sallary/calculateSallary', {dateFrom: dateFrom, dateTo: dateTo});
     } catch (error) {
         console.log(error);
     }
@@ -10,7 +11,7 @@ const calculateSallary = async (dateFrom, dateTo) => {
 
 const getSallaryRange = async () => {
     try {
-        return await axios.get('https://tarik-diplomski.herokuapp.com/api/sallary/sallaryReportRange');
+        return await axios.get(api + '/api/sallary/sallaryReportRange');
     } catch (error) {
         console.log(error);
     }
@@ -18,7 +19,7 @@ const getSallaryRange = async () => {
 
 const getSallaryRangeReport = async (_id) => {
     try {
-        return await axios.get(`https://tarik-diplomski.herokuapp.com/api/sallary/getSallaryRangeReport/${_id}`);
+        return await axios.get(`${api}/api/sallary/getSallaryRangeReport/${_id}`);
     } catch (error) {
         console.log(error);
     }
@@ -26,7 +27,7 @@ const getSallaryRangeReport = async (_id) => {
 
 const getUserSallaryRangeReport = async(_id) => {
     try {
-        return await axios.get(`https://tarik-diplomski.herokuapp.com/api/sallary/getAllSallaryRangeReport/${_id}`);
+        return await axios.get(`${api}/api/sallary/getAllSallaryRangeReport/${_id}`);
     } catch (error) {
         console.log(error);
     }
@@ -34,7 +35,7 @@ const getUserSallaryRangeReport = async(_id) => {
 
 const getAllSallaryReport = async () => {
     try {
-        return await axios.get(`https://tarik-diplomski.herokuapp.com/api/sallary/getAllSallaryReport`);
+        return await axios.get(`${api}/api/sallary/getAllSallaryReport`);
     } catch (error) {
         console.log(error);
     }
@@ -42,7 +43,7 @@ const getAllSallaryReport = async () => {
 
 const getUserAllSallaryReport = async () => {
     try {
-        return await axios.get(`https://tarik-diplomski.herokuapp.com/api/sallary/getUserAllSallaryReport`);
+        return await axios.get(`${api}/api/sallary/getUserAllSallaryReport`);
     } catch (error) {
         console.log(error);
     }

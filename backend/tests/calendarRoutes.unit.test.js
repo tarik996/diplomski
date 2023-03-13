@@ -1,14 +1,24 @@
 const request = require('supertest'); 
 const server = require('../server.js'); 
-const calendarRoutes = require('../routes/calendarRoutes');
+const mongoose = require('mongoose');
 
 describe('Calendar Routes', () => {
+    it('LoginFail', async () => {
+        jest.setTimeout(10 * 2000);
+        const res = await request(server)
+            .post('/api/auth/login')
+            .send({
+                email: "tkulosmano996@gmail.com",
+                password: "sifra1234"
+            });
+        expect(res.body.message).toEqual("Pogrešna lozinka ili email!");
+    }, 20000);
     it('getDaysInCurrentMonth', async () => {
         await request(server)
             .post('/api/auth/login')
             .send({
                 email: "tkulosmano996@gmail.com",
-                password: "oorochooG2au"
+                password: "sifra123"
             })
             .then(async (response) => {
                 const res = await request(server)
@@ -22,7 +32,7 @@ describe('Calendar Routes', () => {
             .post('/api/auth/login')
             .send({
                 email: "tkulosmano996@gmail.com",
-                password: "oorochooG2au"
+                password: "sifra123"
             })
             .then(async (response) => {
                 const res = await request(server)

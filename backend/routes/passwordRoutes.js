@@ -20,7 +20,8 @@ router.put('/forgotpassword', async (req, res) => {
         const hashPassword = await bcrypt.hash(newPassword, salt);
 
         //Promjena lozinke u bazi
-        await User.updateOne({ email: req.body.email }, { password: hashPassword});
+        const user = await User.updateOne({ email: req.body.email }, { password: hashPassword});
+        //console.log(user)
 
         //Slanje emaila sa novom lozinkom
         await sendEmail(req.body.email, 'Promjena lozinke', `Uspješno ste promjenili lozinku i ona glasi ${newPassword}`);
@@ -42,7 +43,7 @@ router.put('/adminChangePassword/:_id', verifyAccessToken, adminRoleAuth, async 
         await User.updateOne({ _id: req.params._id }, { password: hashPassword});
 
         //Slanje emaila sa novom lozinkom
-        await sendEmail(req.body.email, 'Resetovanje lozinke', `Admin vam je uspješno resetova lozinku i ona glasi ${password}`);
+        const user = await sendEmail(req.body.email, 'Resetovanje lozinke', `Admin vam je uspješno resetova lozinku i ona glasi ${password}`);
 
         return res.json({ message: 'Uspješno ste promjenili password!', success: true});   
     } catch (error) {

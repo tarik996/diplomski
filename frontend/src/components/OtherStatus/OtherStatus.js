@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Accordion, AccordionSummary, AccordionDetails, Typography, Card, CardContent, CardActions, TextField, Button, Box, Alert, Snackbar, Stack } from '@mui/material';
-import { MobileDatePicker, LocalizationProvider } from "@mui/lab";
-import DateAdapter from '@mui/lab/AdapterMoment'
+import { MobileDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import moment from "moment";
 import "moment/locale/sr";
 
@@ -87,7 +87,7 @@ const OtherStatus = () => {
                         <CardContent>
                             <TextField sx={{paddingBottom: 2}} disabled fullWidth label="Ukupan broj dana godišnjeg" variant="standard" value={vacationDay}/>
                             <TextField sx={{paddingBottom: 2}} disabled fullWidth label="Preostali broj dana godišnjeg" variant="standard" value={vacationDayLeft}/>
-                            <LocalizationProvider dateAdapter={DateAdapter} locale={"sr"} >
+                            <LocalizationProvider dateAdapter={AdapterMoment} locale={"sr"} >
                                 <Box>
                                     <Typography sx={{marginBottom: 1, marginTop: 1}}>Datum od</Typography>
                                     <MobileDatePicker
@@ -139,7 +139,7 @@ const OtherStatus = () => {
                 <AccordionDetails>
                     <Card>
                         <CardContent>
-                            <LocalizationProvider dateAdapter={DateAdapter} locale={"sr"} >
+                            <LocalizationProvider dateAdapter={AdapterMoment} locale={"sr"} >
                                 <Box>
                                     <Typography sx={{marginBottom: 1, marginTop: 1}}>Datum od</Typography>
                                     <MobileDatePicker
@@ -191,7 +191,7 @@ const OtherStatus = () => {
                 <AccordionDetails>
                     <Card>
                         <CardContent>
-                            <LocalizationProvider dateAdapter={DateAdapter} locale={"sr"} >
+                            <LocalizationProvider dateAdapter={AdapterMoment} locale={"sr"} >
                             <Box>
                                 <Typography sx={{marginBottom: 1, marginTop: 1}}>Datum od</Typography>
                                 <MobileDatePicker
@@ -243,7 +243,7 @@ const OtherStatus = () => {
                 <AccordionDetails>
                     <Card>
                         <CardContent>
-                            <LocalizationProvider dateAdapter={DateAdapter} locale={"sr"} >
+                            <LocalizationProvider dateAdapter={AdapterMoment} locale={"sr"} >
                             <Box>
                                 <Typography sx={{marginBottom: 1, marginTop: 1}}>Datum od</Typography>
                                 <MobileDatePicker
@@ -295,7 +295,7 @@ const OtherStatus = () => {
                 <AccordionDetails>
                     <Card>
                         <CardContent>
-                            <LocalizationProvider dateAdapter={DateAdapter} locale={"sr"} >
+                            <LocalizationProvider dateAdapter={AdapterMoment} locale={"sr"} >
                             <Box>
                                 <Typography sx={{marginBottom: 1, marginTop: 1}}>Datum od</Typography>
                                 <MobileDatePicker

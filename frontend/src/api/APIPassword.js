@@ -1,8 +1,9 @@
 import axios from "axios";
+import { api } from './config';
 
 const resetPassword = async (id, email) => {
     try {
-        return await axios.put(`https://tarik-diplomski.herokuapp.com/api/password/adminChangePassword/${id}`, email);
+        return await axios.put(`${api}/api/password/adminChangePassword/${id}`, email);
     } catch (error) {
         console.log(error);
     }
@@ -10,7 +11,7 @@ const resetPassword = async (id, email) => {
 
 const changePassword = async (password) => {
     try {
-        return await axios.put('https://tarik-diplomski.herokuapp.com/api/password/changePassword', password);
+        return await axios.put(api + '/api/password/changePassword', password);
     } catch (error) {
         console.log(error);
     }
@@ -18,7 +19,7 @@ const changePassword = async (password) => {
 
 const forgotPassword = async (email) => {
     try {
-        return await axios.put("https://tarik-diplomski.herokuapp.com/api/password/forgotpassword", { email: email });
+        return await axios.put(api + "/api/password/forgotpassword", { email: email });
     } catch (error) {
         console.log(error);
     }

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { api } from './config';
 
 const getNextMonth = async (month, year) => {
     try {
@@ -11,7 +12,7 @@ const getNextMonth = async (month, year) => {
         } else
             nextMonth = nextMonth + 1;
         
-        return await axios.post("https://tarik-diplomski.herokuapp.com/api/calendar/getNextMonth", {month: nextMonth, year: nextYear});
+        return await axios.post(api + "/api/calendar/getNextMonth", {month: nextMonth, year: nextYear});
     } catch (error) {
         console.log(error);
     }
@@ -28,7 +29,7 @@ const getPreviousMonth = async (month, year) => {
         } else
             previousMonth = previousMonth - 1;
         
-        return await axios.post("https://tarik-diplomski.herokuapp.com/api/calendar/getPreviousMonth", {month: previousMonth, year: previousYear});
+        return await axios.post(api + "/api/calendar/getPreviousMonth", {month: previousMonth, year: previousYear});
     } catch (error) {
         console.log(error);
     }
@@ -36,7 +37,7 @@ const getPreviousMonth = async (month, year) => {
 
 const getDaysInCurrentMonth = async () => {
     try {
-        return await axios.get("https://tarik-diplomski.herokuapp.com/api/calendar/getDaysInCurrentMonth");
+        return await axios.get(api + "/api/calendar/getDaysInCurrentMonth");
     } catch (error) {
         console.log(error);
     }

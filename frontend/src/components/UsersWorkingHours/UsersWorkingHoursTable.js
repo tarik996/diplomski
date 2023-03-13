@@ -163,15 +163,6 @@ const UsersWorkingHoursTable = () => {
                                             Promjeni
                                         </Button>
                                     </Stack>
-                                    <EditUsersWorkingHoursModal 
-                                        index={userData.current.index}
-                                        _id={userData.current._id} 
-                                        userName={userData.current.userName}
-                                        workingHourFrom={userData.current.workingHourFrom}
-                                        workingHourTo={userData.current.workingHourTo}
-                                        openModal={openModal} 
-                                        handleCloseModal={handleCloseModal} 
-                                    />
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -200,6 +191,15 @@ const UsersWorkingHoursTable = () => {
                     </Snackbar>
                 </Stack>
             )}
+            <EditUsersWorkingHoursModal 
+                index={userData.current.index}
+                _id={userData.current._id} 
+                userName={userData.current.userName}
+                workingHourFrom={userData.current.workingHourFrom}
+                workingHourTo={userData.current.workingHourTo}
+                openModal={openModal} 
+                handleCloseModal={handleCloseModal} 
+            />
         </Box>
     );
 }

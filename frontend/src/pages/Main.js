@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from 'react';
-import { HashRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useMediaQuery, Box } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
@@ -92,7 +92,7 @@ const Router = () => {
     }, [matches, getIsCheckIn, loggedIn, setFlagCheckIn]);
 
     return (
-        <HashRouter>
+        <BrowserRouter>
             { loggedIn === true && (
                 <Box>
                     <SideDrawer open={open} setOpen={setOpen} />
@@ -372,7 +372,7 @@ const Router = () => {
                     </PrivateRoute>
                 } />
             </Routes>
-        </HashRouter>
+        </BrowserRouter>
     )
 }
 

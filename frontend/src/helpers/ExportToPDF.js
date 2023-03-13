@@ -1,6 +1,7 @@
 import { jsPDF } from "jspdf";
 import "jspdf-autotable";
 import axios from 'axios';
+import { api } from '../api/config';
 
 async function exportPDF(tableName, allUsers, tableHeaders, userJSON) {
     const unit = "pt";
@@ -8,7 +9,7 @@ async function exportPDF(tableName, allUsers, tableHeaders, userJSON) {
     const orientation = "landscape"; 
     const doc = new jsPDF(orientation, unit, size);
 
-    const AmiriRegular = await axios.get('https://tarik-diplomski.herokuapp.com/api/fonts/getAmiriFont');
+    const AmiriRegular = await axios.get(api + '/api/fonts/getAmiriFont');
     
     doc.addFileToVFS("Amiri-Regular.ttf", AmiriRegular.data.encode);
     doc.addFont("Amiri-Regular.ttf", "Amiri", "normal");

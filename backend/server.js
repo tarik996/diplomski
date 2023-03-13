@@ -6,6 +6,11 @@ const connectDB = require('./config/db');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 
+dotenv.config();
+
+//Connect to database
+connectDB();
+
 //Import routes
 const userRoutes = require('./routes/userRoutes');
 const loginRoutes = require('./routes/authenticationRoutes');
@@ -17,11 +22,6 @@ const employeeStatusRoutes = require('./routes/employeeStatusRoutes');
 const statusRecordRoutes = require('./routes/statusRecordRoutes');
 const sallaryRoutes = require('./routes/sallaryRoutes');
 
-dotenv.config();
-
-//Connect to database
-connectDB();
-
 //Middleware
 app.use(express.json());
 app.use(cookieParser());
@@ -32,7 +32,8 @@ if(process.env.NODE_ENV === 'production') {
 else if(process.env.NODE_ENV === 'development')  {
     app.use(cors({
         origin: ["http://localhost:3000"],
-        credentials: true
+        credentials: true,
+        optionSuccessStatus: 200
     }));
 }
 

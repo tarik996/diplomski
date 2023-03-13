@@ -1,8 +1,9 @@
 import axios from 'axios';
+import { api } from './config';
 
 const getRoles = async () => {
     try {
-        return await axios.get('https://tarik-diplomski.herokuapp.com/api/roles/getRoles');
+        return await axios.get(api + '/api/roles/getRoles');
     } catch (error) {
         console.log(error);
     }

@@ -56,7 +56,7 @@ const EditUsersWorkingHoursModal = (props) => {
     }
 
     return (
-        <Dialog open={props.openModal} fullWidth={true} onClose={handleClose}>
+        <Dialog open={props.openModal} onClose={handleClose}>
             <DialogTitle>Promjena radnog vremena</DialogTitle>
             <DialogContent>
                 <TextField 
