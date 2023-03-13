@@ -32,7 +32,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.12",
     "node-calendar": "^0.1.5",
-    "nodemailer": "^6.7.2"
+    "nodemailer": "^6.7.2",
+    "sib-api-v3-sdk": "^8.5.0"
   },
   "devDependencies": {
     "concurrently": "^6.3.0",
