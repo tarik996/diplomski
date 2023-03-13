@@ -27,7 +27,11 @@ app.use(express.json());
 app.use(cookieParser());
 
 if(process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, "../frontend/build")));
+    app.use(cors({
+        origin: ["https://tarik-diplomski-react.onrender.com"],
+        credentials: true,
+        optionSuccessStatus: 200
+    }));
 }
 else if(process.env.NODE_ENV === 'development')  {
     app.use(cors({
