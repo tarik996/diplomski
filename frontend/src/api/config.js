@@ -1,1 +1,1 @@
-export const api = 'http://localhost:3500';
+export const api = 'https://tarik-diplomski.onrender.com';
