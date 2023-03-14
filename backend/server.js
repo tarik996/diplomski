@@ -26,20 +26,10 @@ const sallaryRoutes = require('./routes/sallaryRoutes');
 app.use(express.json());
 app.use(cookieParser());
 
-if(process.env.NODE_ENV === 'production') {
-    app.use(cors({
-        origin: ["https://tangerine-peony-9812ef.netlify.app"],
-        credentials: true,
-        optionSuccessStatus: 200
-    }));
-}
-else if(process.env.NODE_ENV === 'development')  {
-    app.use(cors({
-        origin: ["http://localhost:3000"],
-        credentials: true,
-        optionSuccessStatus: 200
-    }));
-}
+app.use(cors({
+    origin: "*",
+    optionsSuccessStatus: 200
+}));
 
 //Route middlewares
 app.use('/api/users', userRoutes);
