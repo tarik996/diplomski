@@ -85,7 +85,7 @@ router.delete('/logout', verifyAccessToken , async (req, res) => {
 
     try{
         return res.cookie("access-token", "", {
-            sameSite: 'strict',
+            sameSite: 'none',
             path: '/',
             expires: new Date(0),
             httpOnly: true,
