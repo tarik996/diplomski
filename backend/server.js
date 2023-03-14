@@ -22,14 +22,14 @@ const employeeStatusRoutes = require('./routes/employeeStatusRoutes');
 const statusRecordRoutes = require('./routes/statusRecordRoutes');
 const sallaryRoutes = require('./routes/sallaryRoutes');
 
+app.use(cors({
+    origin: ['http://localhost:3000', 'https://tangerine-peony-9812ef.netlify.app'],
+    credentials: true,
+}));
+
 //Middleware
 app.use(express.json());
 app.use(cookieParser());
-
-app.use(cors({
-    origin: "*",
-    optionsSuccessStatus: 200
-}));
 
 //Route middlewares
 app.use('/api/users', userRoutes);
