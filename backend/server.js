@@ -28,7 +28,7 @@ app.use(cookieParser());
 
 if(process.env.NODE_ENV === 'production') {
     app.use(cors({
-        origin: ["https://tarik-diplomski-react.onrender.com"],
+        origin: ["https://tangerine-peony-9812ef.netlify.app"],
         credentials: true,
         optionSuccessStatus: 200
     }));
